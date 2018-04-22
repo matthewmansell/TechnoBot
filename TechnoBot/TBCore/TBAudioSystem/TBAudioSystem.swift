@@ -14,42 +14,53 @@ public class TBAudioSystem {
     let MOD_SLOTS = 5 //Max audio modifiers allowed per group
     let AU_SLOTS = 5 //Max audio unit allowed
     
+    var playing = false
     var mixer = AKMixer() //Master bus
-    var audioUnits = [TBAudioUnit()] //All audio units
+    var audioUnits = [TBAudioUnit]() //All audio units
     var modifiers : TBModifierGroup //Master bus inserts
     var sequencer = AKSequencer() //Main Sequencer
     
+    /// Initialises the audio system
     public init() {
-        modifiers = TBModifierGroup(mixer, MOD_SLOTS)
+        modifiers = TBModifierGroup(mixer, slots: MOD_SLOTS)
+        AudioKit.output = modifiers.getOutput()
+        do { try AudioKit.start()
+        } catch { AKLog("AudioKit did not start!"); TechnoBot.shared.log("Audio system did not start!") }
         
-        AudioKit.output = modifiers.getOutput() //Output is from last modifier
-        do {
-            try AudioKit.start()
-        } catch {}
-            
     }
     
+    /// Number of audio units playing
+    public func audioUnitCount() -> Int { return audioUnits.count }
     public func play() {
-        
+        mixer.start()
+        for unit in audioUnits { unit.play() }
+        playing = true
+    }
+    public func pause() {
+        mixer.stop()
+        for unit in audioUnits { unit.pause() }
+        playing = false
+    }
+    public func startRecording() {}
+    public func stopRecording() {}
+    public func isRecording() -> Bool { return false }
+    
+    public func isPlaying() -> Bool { return playing }
+    
+    public func addAudioUnit(_ unit: TBAudioUnit) {
+        audioUnits.append(unit)
+        mixer.connect(input: unit.getOutput())
     }
     
-    public func isPlaying() -> Bool {
-        return 
-    }
+    public func removeAudioUnit() {}
     
-    public func addAudioUnit() {
-        let newUnit = TBAudioUnit()
-        
-        audioUnits.append(newUnit)
-        
-        mixer.connect(input: newUnit.getOutput())
-        
-    }
     public func addAudioModifier() {
         //let newModifier = TBReverbModifier()
         
         //modifiers.append(newModifier)
     }
+    
+    public func removeAudioModifier() {}
     
     
 }

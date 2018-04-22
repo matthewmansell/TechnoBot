@@ -16,7 +16,7 @@ public class TBDistortionModifier : TBAudioModifier {
     public override func setInput(_ input: AKNode) {
         distortionUnit = AKDistortion(input)
         distortionUnit.start()
-        super.mixer = AKDryWetMixer(input, distortionUnit)
+        //super.mixer = AKDryWetMixer(input, distortionUnit)
     }
     
     

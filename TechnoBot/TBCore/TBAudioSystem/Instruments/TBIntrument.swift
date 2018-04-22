@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import AudioKit
 
-public class TBInstrument {
-    
-    public init() {
-        
-    }
-    
-    
+/// Protocol for instrument type conforment
+public protocol TBInstrument {
+    var instrumentID: String { get } //Type identifier
+    func getOutput() -> AKNode //Output
+    func play()
+    func pause()
+    //func setInput()
 }

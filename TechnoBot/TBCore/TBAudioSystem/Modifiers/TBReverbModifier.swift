@@ -11,12 +11,16 @@ import AudioKit
 
 public class TBReverbModifier : TBAudioModifier {
     
-    public var reverbUnit = AKReverb()
+    public var reverb = AKReverb()
     
     public override func setInput(_ input: AKNode) {
-        reverbUnit = AKReverb(input, dryWetMix: 1)
-        reverbUnit.start()
-        super.mixer = AKDryWetMixer(input, reverbUnit)
+        reverb = AKReverb(input, dryWetMix: 1)
+        reverb.start()
+        //super.mixer = AKDryWetMixer(input, reverbUnit)
+    }
+    
+    public override func getOutput() -> AKNode {
+        return reverb
     }
     
 }

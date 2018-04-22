@@ -9,17 +9,15 @@
 import Foundation
 import AudioKit
 
-/**
- Links a number of modifiers into a chain.
- */
+/// Links a number of modifiers into a chain.
 public class TBModifierGroup {
     
-    private var input : AKNode
-    private var modifiers = [TBAudioModifier()]
+    private var input : AKNode //Source node
+    private var modifiers = [TBAudioModifier]()
     
-    public init(_ input: AKNode, _ slots: Int) {
+    public init(_ input: AKNode, slots: Int = 5) {
         self.input = input
-        for _ in 0...slots { modifiers.append(TBAudioModifier()) } //Initialise elements
+        for _ in 0...slots-1 { modifiers.append(TBAudioModifier()) } //Initialise elements
         chainModifiers()
     }
     
@@ -45,12 +43,10 @@ public class TBModifierGroup {
         return modifiers.last!.getOutput()
     }
     
-    /**
-     Rechains modifier IO.
-     */
+    /// Rechains modifier IO
     private func chainModifiers() {
         for i in 0...modifiers.count-1 {
-            if(i == 0) { modifiers[0].setInput(input) }
+            if(i == 0) { modifiers[0].setInput(input) } //First gets source input
             else { modifiers[i].setInput(modifiers[i-1].getOutput()) }
         }
     }

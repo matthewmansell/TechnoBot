@@ -7,10 +7,26 @@
 //
 
 import Foundation
+import AudioKit
 
-public class TBFMSynthesiser {
+/// Wrapper for AKFM Oscillator
+public class TBFMSynthesiser : TBInstrument {
     
     
+    public var instrumentID = "FM"
+    private var fMO = AKFMOscillator()
     
+    init() {
+        fMO.presetWobble()
+    }
+    
+    public func play() { fMO.start() }
+    
+    public func pause() { fMO.stop() }
+    
+    public func getOutput() -> AKNode {
+        //fMO.start()
+        return fMO
+    }
     
 }

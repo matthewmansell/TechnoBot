@@ -10,14 +10,17 @@ import Foundation
 
 public class TBBrain {
     
+    
+    
     public init() {
         
     }
     
-    public func GenIdea() -> TBIdea {
+    public func genIdea() -> TBIdea {
         let newIdea = TBIdea()
         return newIdea
     }
+    
     
     
     

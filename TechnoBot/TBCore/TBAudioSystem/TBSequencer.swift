@@ -13,11 +13,9 @@ public class TBSequencer : AKSequencer {
     
     private let sequencer = AKSequencer()
     
+    public func isPlaying() -> Bool { return sequencer.isPlaying }
+    
     public func addTrack() {
         
     }
-    
-    
-    
-    
 }

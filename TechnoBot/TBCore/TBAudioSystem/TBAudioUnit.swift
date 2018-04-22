@@ -9,34 +9,35 @@
 import Foundation
 import AudioKit
 
+/// A single audio unit (score, instrument and modifiers)
 public class TBAudioUnit {
     
+    var lifetime = 0
+    var instrument: TBInstrument
+    var modifierGroup : TBModifierGroup
     
-    
-    var source = TBAudioSource()
-    var modifiers : TBModifierGroup
-    
-    
-    public init() {
-        modifiers = TBModifierGroup(source.getOutput(), TBAudioSystem.MOD_SLOTS)
+    public init(_ instrument: TBInstrument, modifierSlots: Int = 5) {
+        self.instrument = instrument
+        modifierGroup = TBModifierGroup(instrument.getOutput(), slots: modifierSlots)
     }
     
-    public func setSource(source: TBAudioSource) {
-        self.source = source
-    }
-    
-    public func addReverb() {
-        
-    }
+    public func incrementLife() { lifetime += 1 }
     
     
-    public func addModifier(modifier: TBAudioModifier) {
+    public func play() { instrument.play() }
+    public func pause() { instrument.pause() }
+    
+    public func addModifier(_ modifier: TBAudioModifier, slot: Int? = nil) {
+        if(slot != nil) {
+            modifierGroup.setModifier(modifier: modifier, slot: slot!)
+        } else {
+            
+        }
     }
     
     public func getOutput() -> AKNode {
-        return modifiers.getOutput() //Last modifier is output
+        //return instrument.getOutput()
+        return modifierGroup.getOutput() //Last modifier is output
     }
-    
-    
     
 }

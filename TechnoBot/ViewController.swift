@@ -18,8 +18,9 @@ class ViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var seq4: NSLevelIndicator!
     @IBOutlet weak var seq1: NSLevelIndicator!
     @IBOutlet weak var beat: NSTextField!
-    @IBOutlet weak var tempo: NSTextField!
+    @IBOutlet var log: NSTextView!
     
+    /*
     var kick = AKSynthKick()
     var snare = AKSynthSnare()
     var hat = AKShaker()
@@ -31,57 +32,55 @@ class ViewController: NSViewController, NSWindowDelegate {
     var midi = AKMIDI()
     var sequencer = AKSequencer()
     var osc = AKFMOscillator()
+    */
     
-    let sequenceLength = AKDuration(beats: 4.0)
+    //var oscillator1 = AKOscillator()
+    //var oscillator2 = AKOscillator()
+    //var mixer = AKMixer()
     
-    let tb = TechnoBot()
+    
+    //let sequenceLength = AKDuration(beats: 4.0)
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        tb.start()
-
-        /*
-        setBeat()
-        let click = TBMidiCallback(callback: self.setBeat)
-        var midiNode = AKMIDINode(node: pad)
-        mixer = AKMixer(kick, snare, pad, osc)
-        phaser = AKPhaser(mixer)
-        reverb = AKReverb(phaser)
-        limiter = AKPeakLimiter(reverb, attackTime: 0.01, decayTime: 0.01, preGain: 0)
-        osc.start()
-        osc.presetSpiral()
-        //AudioKit.output = osc
-       // do {
-        //    try AudioKit.start()
-        //} catch {
-        //    //Nothing
-        //}
         
-        _ = sequencer.newTrack()
-        sequencer.tracks[Sequence.click.rawValue].setMIDIOutput(click.midiIn)
-        generateClickSequence()
-        
-        _ = sequencer.newTrack()
-        sequencer.tracks[Sequence.kick.rawValue].setMIDIOutput(kick.midiIn)
-        generateKickSequence()
-        
-        _ = sequencer.newTrack()
-        sequencer.tracks[Sequence.snare.rawValue].setMIDIOutput(snare.midiIn)
-        generateSnareSequence()
-        
-        _ = sequencer.newTrack()
-        sequencer.tracks[Sequence.melody.rawValue].setMIDIOutput(midiNode.midiIn)
-        generateMelodySequence()
+        //mixer = AKMixer(oscillator1, oscillator2)
+        // Cut the volume in half since we have two oscillators
+        //mixer.volume = 0.5
+        //AudioKit.output = mixer
         
         
-        sequencer.setTempo(125)
-        sequencer.setLength(sequenceLength)
-        sequencer.enableLooping()
+        
+        //setBeat()
+        //let click = TBMidiCallback(callback: self.setBeat)
+        //var midiNode = AKMIDINode(node: pad)
+        //mixer = AKMixer(kick, snare, pad, osc)
+        //phaser = AKPhaser(mixer)
+        //reverb = AKReverb(phaser)
+        //limiter = AKPeakLimiter(reverb, attackTime: 0.01, decayTime: 0.01, preGain: 0)
+        
+        //_ = sequencer.newTrack()
+        //sequencer.tracks[Sequence.click.rawValue].setMIDIOutput(click.midiIn)
+        //generateClickSequence()
+        
+        //_ = sequencer.newTrack()
+        //sequencer.tracks[Sequence.kick.rawValue].setMIDIOutput(kick.midiIn)
+        //generateKickSequence()
+        
+        //_ = sequencer.newTrack()
+        //sequencer.tracks[Sequence.snare.rawValue].setMIDIOutput(snare.midiIn)
+        //generateSnareSequence()
+        
+        //_ = sequencer.newTrack()
+        //sequencer.tracks[Sequence.melody.rawValue].setMIDIOutput(midiNode.midiIn)
+        //generateMelodySequence()
+        
+        //sequencer.setTempo(125)
+        //sequencer.setLength(sequenceLength)
+        //sequencer.enableLooping()
         //sequencer.setLoopInfo(AKDuration(beats:64), numberOfLoops: 2)
         //sequencer.enableLooping()
-        
-        */
-        
         
     }
 
@@ -100,6 +99,7 @@ class ViewController: NSViewController, NSWindowDelegate {
     }
     
     
+    /*
     func generateClickSequence(_ stepSize: Float = 1, clear: Bool = true) {
         if clear { sequencer.tracks[Sequence.click.rawValue].clear() }
         let numberOfSteps = Int(Float(sequenceLength.beats) / stepSize)
@@ -161,53 +161,21 @@ class ViewController: NSViewController, NSWindowDelegate {
         seq1.doubleValue = s1
         self.beat.stringValue = String(beat)
     }
-    
-    @IBAction func verb(_ sender: NSSlider) {
-        reverb.dryWetMix = sender.doubleValue
-    }
+ */
     
     @IBAction func toggleSeq(_ sender: NSButton) {
-        TechnoBot.shared.start()
-        /*
-        if(sequencer.isPlaying) {
-            sequencer.stop()
-            sender.title = "Play"
-        } else {
-            sequencer.play()
-            sender.title = "Stop"
-        }
-        */
+        TechnoBot.shared.togPlaying()
     }
     
-    @IBAction func changeTempo(_ sender: NSSlider) {
-        sequencer.setTempo(round(sender.doubleValue))
-        tempo.stringValue = String(sequencer.tempo)
-    }
-    @IBAction func sld1(_ sender: NSSlider) {
-        phaser.notchWidth = sender.doubleValue
-        
-    }
-    @IBAction func sld2(_ sender: NSSlider) {
-        phaser.notchFrequency = sender.doubleValue
-        
+    @IBAction func resetSystem(_ sender: NSButton) {
+        TechnoBot.shared.reset()
     }
     
-    @IBAction func sld3(_ sender: NSSlider) {
-        phaser.feedback = sender.doubleValue
-    }
-    @IBAction func baseFrequency(_ sender: NSSlider) {
-        osc.baseFrequency = sender.doubleValue
-    }
-    @IBAction func carrierMultiplier(_ sender: NSSlider) {
-        osc.carrierMultiplier = sender.doubleValue
-    }
-    @IBAction func modulatingMultiplier(_ sender: NSSlider) {
-        osc.modulatingMultiplier = sender.doubleValue
-    }
-    @IBAction func modulationIndex(_ sender: NSSlider) {
-        osc.modulationIndex = sender.doubleValue
-    }
     
+    func writeLog(_ s: String) {
+        log.textStorage?.append(NSAttributedString(string: s + "\n"))
+        log.scrollToEndOfDocument(self)
+    }
 }
 
 enum Sequence: Int {
