@@ -14,8 +14,9 @@ public class TBReverbModifier : TBAudioModifier {
     public var reverb = AKReverb()
     
     public override func setInput(_ input: AKNode) {
-        reverb = AKReverb(input, dryWetMix: 1)
+        reverb = AKReverb(input, dryWetMix: 0.1)
         reverb.start()
+        
         //super.mixer = AKDryWetMixer(input, reverbUnit)
     }
     

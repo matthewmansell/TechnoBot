@@ -9,13 +9,35 @@
 import Foundation
 import AudioKit
 
-public class TBSequencer : AKSequencer {
+public class TBSequencer  {
     
-    private let sequencer = AKSequencer()
+    let sequencer = AKSequencer()
+    //private let click : AKMusicTrack
     
+    init() {
+        //click = sequencer.newTrack()!
+        //for i in 0 ..< 64 {
+            //click.add(noteNumber: 50, velocity: 100, position: AKDuration(beats: Double(i)), duration: AKDuration(beats: 0.5))
+            //click.add(noteNumber: 55, velocity: 50, position: AKDuration(beats: Double(i)+0.5), duration: AKDuration(beats: 0.5))
+        //}
+        sequencer.setTempo(128)
+        //sequencer.setLength(AKDuration(beats: 64))
+        //sequencer.enableLooping()
+        print("here")
+    }
+    public func play() { sequencer.play() }
+    public func pause() { sequencer.stop() }
     public func isPlaying() -> Bool { return sequencer.isPlaying }
+    public func getBeat() -> Int { return Int(round(sequencer.currentPosition.beats)) }
+    public func rewind() {
+        sequencer.setTime(MusicTimeStamp(0))
+        //sequencer.rewind()
+    }
     
-    public func addTrack() {
-        
+    public func connectAudioUnit(_ unit: TBAudioUnit) {
+        let t = sequencer.newTrack()
+        unit.getTrack().copyAndMergeTo(musicTrack: t!)
+        t?.setMIDIOutput(unit.instrument.midiIn)
+        //sequencer.tracks.append(track)
     }
 }

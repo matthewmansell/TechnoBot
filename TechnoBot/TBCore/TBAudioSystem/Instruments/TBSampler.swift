@@ -12,33 +12,33 @@ import AudioKit
 /// Wrapper for AK Sampler
 public class TBSampler : TBInstrument {
     
-    
-    public var instrumentID = "Sampler"
     private var sampler = AKAppleSampler()
+    var x = AKSamplePlayer()
     
-    init(_ file: String? = nil) {
-        if(file != nil) { loadSample(file!) }
+    override public init(midiInputName: String? = nil) {
+        super.init(midiInputName: midiInputName)
+        instrumentID = "Sampler"
     }
     
-    public func loadSample(_ file: String) {
-        let f : AKAudioFile
-        do { try f = AKAudioFile(forReading: URL(fileURLWithPath: file))
-            try sampler.loadAudioFile(f)
-        } catch { TechnoBot.shared.log("File could not be loaded") }
+    public func loadSample(_ file: URL?) {
+        if(file != nil) {
+            let f : AKAudioFile
+            do { try f = AKAudioFile(forReading: file!)
+                try sampler.loadAudioFile(f)
+            } catch { TechnoBot.shared.log("File could not be loaded") }
+        }
     }
     
-    public func play() {
+    override public func start(noteNumber: MIDINoteNumber, velocity: MIDIVelocity, channel: MIDIChannel) {
         do { try sampler.play()
-        } catch { TechnoBot.shared.log("Cannot play.") }
+        } catch { TechnoBot.shared.log("Sampler cannot play.") }
     }
     
-    public func pause() { }
-        //try sampler.stop() }
+    override public func stop(noteNumber: MIDINoteNumber, channel: MIDIChannel) {
+        //Not required
+    }
     
-    public func getOutput() -> AKNode {
-        //fMO.start()
-        
+    override public func getOutput() -> AKNode {
         return sampler
     }
-    
 }

@@ -9,11 +9,12 @@
 import Foundation
 import AudioKit
 
-/// Protocol for instrument type conforment
-public protocol TBInstrument {
-    var instrumentID: String { get } //Type identifier
-    func getOutput() -> AKNode //Output
-    func play()
-    func pause()
-    //func setInput()
+/// Wrapper for AKMIDIInstrument
+public class TBInstrument: AKMIDIInstrument {
+    var osc = AKOscillator()
+    var instrumentID: String = "Default" //Type identifier
+    //var midiIn: MIDIEndpointRef {get}
+    func getOutput() -> AKNode { return osc }//Output
+    //func start(noteNumber: MIDINoteNumber?, velocity: MIDIVelocity?)
+    //func stop()
 }

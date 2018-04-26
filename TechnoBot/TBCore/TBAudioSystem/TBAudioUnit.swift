@@ -12,31 +12,32 @@ import AudioKit
 /// A single audio unit (score, instrument and modifiers)
 public class TBAudioUnit {
     
-    var lifetime = 0
-    var instrument: TBInstrument
-    var modifierGroup : TBModifierGroup
+    var lifetime = 0 //Chunks survived
+    var score = AKMusicTrack() //Midi
+    var instrument: TBInstrument //Instrument
+    var modifierGroup : TBModifierGroup //Modifiers
     
     public init(_ instrument: TBInstrument, modifierSlots: Int = 5) {
         self.instrument = instrument
         modifierGroup = TBModifierGroup(instrument.getOutput(), slots: modifierSlots)
+        score.setMIDIOutput(instrument.midiIn)
     }
     
     public func incrementLife() { lifetime += 1 }
     
-    
-    public func play() { instrument.play() }
-    public func pause() { instrument.pause() }
-    
     public func addModifier(_ modifier: TBAudioModifier, slot: Int? = nil) {
         if(slot != nil) {
             modifierGroup.setModifier(modifier: modifier, slot: slot!)
-        } else {
-            
-        }
+        } else { }
     }
     
+    public func removeModifier(_ slot: Int) {
+        modifierGroup.removeModifier(slot: slot)
+    }
+    
+    public func getTrack() -> AKMusicTrack { return score }
+    
     public func getOutput() -> AKNode {
-        //return instrument.getOutput()
         return modifierGroup.getOutput() //Last modifier is output
     }
     

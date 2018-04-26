@@ -12,21 +12,26 @@ import AudioKit
 /// Wrapper for AKFM Oscillator
 public class TBFMSynthesiser : TBInstrument {
     
-    
-    public var instrumentID = "FM"
     private var fMO = AKFMOscillator()
     
     init() {
+        super.init()
+        instrumentID = "FM"
         fMO.presetWobble()
+        fMO.amplitude = 0.08
     }
     
-    public func play() { fMO.start() }
+    override public func start(noteNumber: MIDINoteNumber, velocity: MIDIVelocity, channel: MIDIChannel) {
+        fMO.baseFrequency = noteNumber.midiNoteToFrequency()
+        //fMO.carrierMultiplier = noteNumber.midiNoteToFrequency()-5
+        fMO.start()
+    }
     
-    public func pause() { fMO.stop() }
+    override public func stop(noteNumber: MIDINoteNumber, channel: MIDIChannel) {
+        fMO.stop()
+    }
     
-    public func getOutput() -> AKNode {
-        //fMO.start()
+    override public func getOutput() -> AKNode {
         return fMO
     }
-    
 }
