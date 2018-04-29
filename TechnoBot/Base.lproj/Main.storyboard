@@ -710,14 +710,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <box fixedFrame="YES" boxType="custom" cornerRadius="15" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="vKN-ke-tL0">
+                            <box toolTip="Controlls" fixedFrame="YES" boxType="custom" cornerRadius="15" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="vKN-ke-tL0">
                                 <rect key="frame" x="170" y="179" width="140" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <view key="contentView" ambiguous="YES" id="Dkw-DM-rG8">
                                     <rect key="frame" x="1" y="1" width="138" height="58"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3V-tV-GOS">
+                                        <button toolTip="Play/Pause" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3V-tV-GOS">
                                             <rect key="frame" x="49" y="8" width="40" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" alternateImage="NSTouchBarPauseTemplate" borderStyle="border" inset="2" id="88U-fa-qbP">
@@ -728,7 +728,7 @@
                                                 <action selector="toggleSeq:" target="XfG-lQ-9wD" id="cQ9-0i-KnU"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="27J-59-0vA">
+                                        <button toolTip="Reset" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="27J-59-0vA">
                                             <rect key="frame" x="100" y="13" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSTouchBarRefreshTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RwJ-bN-c4P">
@@ -739,22 +739,22 @@
                                                 <action selector="resetSystem:" target="XfG-lQ-9wD" id="loS-qz-HuF"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hIy-3n-8HQ">
+                                        <button toolTip="Start/Stop Recording" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hIy-3n-8HQ">
                                             <rect key="frame" x="10" y="13" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSTouchBarRecordStartTemplate" imagePosition="only" alignment="center" alternateImage="NSTouchBarRecordStopTemplate" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Iea-US-fqj">
+                                            <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSTouchBarRecordStartTemplate" imagePosition="only" alignment="center" alternateImage="NSTouchBarRecordStopTemplate" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Iea-US-fqj">
                                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="toggleSeq:" target="XfG-lQ-9wD" id="Gd9-kE-LeZ"/>
+                                                <action selector="togRecord:" target="XfG-lQ-9wD" id="l93-Ex-ch0"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                 </view>
                                 <color key="borderColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </box>
-                            <box fixedFrame="YES" boxType="custom" cornerRadius="15" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="2fb-U7-A3A">
+                            <box toolTip="Sequencer" fixedFrame="YES" boxType="custom" cornerRadius="15" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="2fb-U7-A3A">
                                 <rect key="frame" x="339" y="170" width="120" height="83"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
                                 <view key="contentView" ambiguous="YES" id="Q8f-SE-7a3">
@@ -866,6 +866,7 @@
                         <outlet property="beat" destination="woS-JC-T6m" id="Dm4-fG-ZN4"/>
                         <outlet property="log" destination="hne-3O-RD9" id="lkA-bM-deZ"/>
                         <outlet property="play" destination="x3V-tV-GOS" id="N55-6N-Fg1"/>
+                        <outlet property="record" destination="hIy-3n-8HQ" id="woq-mI-5Eh"/>
                         <outlet property="seq1" destination="aSi-4D-kYm" id="UQV-Gh-hXS"/>
                         <outlet property="seq16" destination="06q-Lp-Xmh" id="cO9-ht-Evs"/>
                         <outlet property="seq4" destination="GhI-k4-6t6" id="Ngf-JE-NCt"/>

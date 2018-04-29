@@ -15,8 +15,8 @@ public class TBSampler : TBInstrument {
     private var sampler = AKAppleSampler()
     var x = AKSamplePlayer()
     
-    override public init(midiInputName: String? = nil) {
-        super.init(midiInputName: midiInputName)
+    init() {
+        super.init()
         instrumentID = "Sampler"
     }
     

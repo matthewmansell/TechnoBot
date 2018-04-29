@@ -8,19 +8,30 @@
 
 import Foundation
 
+/// Responsible for generating and modifying content
 public class TBBrain {
     
-    
+    var audioUnits = [TBAudioUnit]() //Units to be added to system
+    var modifiers = [TBAudioModifier]() //Modifiers to be added to system
     
     public init() {
         
     }
     
-    public func genIdea() -> TBIdea {
-        let newIdea = TBIdea()
-        return newIdea
+    private func getAudioUnit() -> TBAudioUnit {
+        let newUnit = TBAudioUnit(genInstrument())
+        return newUnit
     }
     
+    private func genInstrument() -> TBInstrument {
+        let newInstrument = TBInstrument()
+        return newInstrument
+    }
+    
+    private func genModifier() -> TBAudioModifier {
+        let newModifier = TBAudioModifier()
+        return newModifier
+    }
     
     
     

@@ -13,17 +13,22 @@ public class TBAudioSystem {
     
     let MOD_SLOTS = 5 //Max audio modifiers allowed per group
     let AU_SLOTS = 5 //Max audio unit allowed
+    let RECORDINGS_FOLDER = "TechnoBot_Recordings"
+    let RECORD_FILE = "TBRecording"
     
     var mixer = AKMixer() //Master bus
     var audioUnits = [TBAudioUnit]() //All audio units
     //var xyz = Set<TBAudioUnit>()
     var modifiers : TBModifierGroup //Master bus inserts
     var sequencer = TBSequencer() //Main Sequencer
+    //var limiter : AKPeakLimiter? //Used as output, level safety is important!
+    var recorder : AKNodeRecorder? = nil
+    var recordingSettings: [String : Any] = [:] as [String : Any] //Specify recording settings?
     
     /// Initialises the audio system
     public init() {
         modifiers = TBModifierGroup(mixer, slots: MOD_SLOTS)
-        AudioKit.output = modifiers.getOutput()
+        pushChanges() //Setup signal chain
         do { try AudioKit.start()
         } catch { AKLog("AudioKit did not start!"); TechnoBot.shared.log("Audio system did not start!") }
         //Generate sequencer event instrument
@@ -38,16 +43,51 @@ public class TBAudioSystem {
     /// Number of audio units playing
     public func audioUnitCount() -> Int { return audioUnits.count }
     public func play() {
-        mixer.start()
+        //mixer!.start()
         sequencer.play()
     }
     public func pause() {
-        mixer.stop()
+        //mixer!.stop()
         sequencer.pause()
     }
-    public func startRecording() {}
-    public func stopRecording() {}
-    public func isRecording() -> Bool { return false }
+    
+    /// Sets up recorder and starts recording stream to a new file
+    public func startRecording() {
+        let directoryPath = NSHomeDirectory() + "/Music/" + RECORDINGS_FOLDER //Folder path
+        var isDir : ObjCBool = false
+        if !FileManager.default.fileExists(atPath: directoryPath, isDirectory: &isDir) { //Need to creade folder first?
+            do { try FileManager.default.createDirectory(atPath: directoryPath, withIntermediateDirectories: true, attributes: nil)
+            } catch { print(error) }
+        }
+        let date = Date(); let calendar = Calendar.current
+        let dateString = String(calendar.component(.year, from: date)) + String(calendar.component(.month, from: date)) + String(calendar.component(.day, from: date))
+        let timeString = String(calendar.component(.hour, from: date)) + String(calendar.component(.minute, from: date))
+        var fileName = RECORD_FILE + "_" + dateString + "_" + timeString
+        var noCount = 0
+        while FileManager.default.fileExists(atPath: directoryPath + "/" + fileName) { noCount += 1 } //Exists
+        if(noCount != 0) { fileName += "-" + String(noCount) } //Add suffix
+        let fileURL = URL(string: directoryPath + "/" + fileName + ".alac")
+        //FileManager.default.createFile(atPath: fileURL!.path, contents: nil, attributes: nil)
+        do { let audioFile = try AKAudioFile(forWriting: fileURL!, settings: AKSettings.audioFormat.settings)
+            //let m = AKMixer(); m.connect(input: limiter!)
+            try recorder = AKNodeRecorder(node: modifiers.getOutput(), file: audioFile)
+            try recorder?.record()
+            TechnoBot.shared.log("Recording to \"" + fileURL!.absoluteString + "\"") //Notify location
+        } catch { TechnoBot.shared.log("Could not start recording.") }
+        
+        //TechnoBot.shared.log("Recording to \"" + fileURL!.absoluteString + "\"") //Notify location
+        //let file = URL(fileURLWithPath: <#T##String#>)
+        
+        //let file = AKAudioFile()
+        //recorder = AKNodeRecorder(node: modifiers.getOutput(), file:)
+        //do{ try recorder.record() } catch {}
+        
+    }
+    public func stopRecording() { recorder?.stop(); recorder = nil }
+    public func isRecording() -> Bool {
+        if(recorder != nil) { return recorder!.isRecording }
+        else { return false }
+    }
     
     public func isPlaying() -> Bool { return sequencer.isPlaying() }
     
@@ -58,7 +98,8 @@ public class TBAudioSystem {
         sequencer.sequencer.setLength(AKDuration(beats: 4))
         sequencer.sequencer.enableLooping()
         sequencer.play()
-        mixer.connect(input: unit.getOutput()) //Connect to mixer
+        //mixer.connect(input: unit.getOutput()) //Connect to mixer
+        //refresh()
     }
     
     public func removeAudioUnit(_ unit: TBAudioUnit) {
@@ -85,25 +126,23 @@ public class TBAudioSystem {
         if(sequencer.getBeat() == 64) {
             sequencer.pause()
             audioUnits.removeAll()
-            mixer = AKMixer()
+            //mixer = AKMixer()
             sequencer.rewind()
             sequencer.play()
         }
-        /*
-        if(sequencer.getBeat() == 32) {
-            print("here")
-            let sound2 = TBSampler()
-            sound2.loadSample(Bundle.main.url(forResource: "hat_01", withExtension: "wav"))
-            let unit2 = TBAudioUnit(sound2)
-            for i in 0 ..< 64 {
-                unit2.getTrack().add(noteNumber: 60, velocity: 100, position: AKDuration(beats: Double(i)+0.5), duration: AKDuration(beats: 1))
-            }
-            addAudioUnit(unit2)
-        }
-         */
+    }
+    
+    /// Re-chains audio streams
+    public func pushChanges() {
+        mixer = AKMixer() //Reset mixer
+        for unit in audioUnits { mixer.connect(input: unit.getOutput()) } //Add all instruments
+        modifiers.setInput(mixer) //Reset modifier input
+        //limiter = AKPeakLimiter(modifiers.getOutput()) //Reset limiter
+        AudioKit.output = modifiers.getOutput() //Reset output
     }
 }
 
+/// Custom instrument type for
 private class TBCallbackInstrument: TBInstrument {
     var noteDownCallback : () -> Void
     var noteUpCallback : () -> Void

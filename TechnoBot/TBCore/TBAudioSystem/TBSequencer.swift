@@ -15,15 +15,7 @@ public class TBSequencer  {
     //private let click : AKMusicTrack
     
     init() {
-        //click = sequencer.newTrack()!
-        //for i in 0 ..< 64 {
-            //click.add(noteNumber: 50, velocity: 100, position: AKDuration(beats: Double(i)), duration: AKDuration(beats: 0.5))
-            //click.add(noteNumber: 55, velocity: 50, position: AKDuration(beats: Double(i)+0.5), duration: AKDuration(beats: 0.5))
-        //}
         sequencer.setTempo(128)
-        //sequencer.setLength(AKDuration(beats: 64))
-        //sequencer.enableLooping()
-        print("here")
     }
     public func play() { sequencer.play() }
     public func pause() { sequencer.stop() }

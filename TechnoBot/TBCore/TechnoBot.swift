@@ -12,14 +12,14 @@ import AudioKit
 
 public class TechnoBot {
     
-    public static let shared = TechnoBot()
+    public static let shared = TechnoBot() //Shared/Singleton instance
     
     //Index applies to section number
-    let SECTIONS = ["buildup", "dance", "breakdown"]
+    let SECTIONS = ["buildup", "dance", "breakdown"] //Section relevance
     let PROGRESSION_CHANCE = [50, 25, 50] //Chance to progress sections
     let ADDITION_CHANCE = [75, 50, 0] //Chance of generating/adding a new sound
     let MUTATION_CHANCE = [25, 25, 25] //Chance of mutating a sound
-    
+    //Samples
     let kickSamples = ["kick_01", "kick_02", "kick_03", "kick_05", "kick_05", "kick_06", "kick_07", "kick_08"]
     let hatSamples = ["hat_01", "hat_02", "hat_03", "hat_04", "hat_05", "hat_06", "hat_07", "hat_08"]
     let clapSamples = ["clap_01", "clap_02", "clap_03", "clap_04"]
@@ -27,9 +27,9 @@ public class TechnoBot {
     let rimSamples = ["rim_01", "rim_02", "rim_03", "rim_04"]
     let percSamples = ["perc_01", "perc_02", "perc_03", "perc_04", "perc_05", "perc_06", "perc_07", "perc_08"]
     
-    let vc = NSApplication.shared.mainWindow?.contentViewController as! ViewController
+    let vc = NSApplication.shared.mainWindow?.contentViewController as! ViewController //VC Pointer
     
-    var section = 0 //Section
+    var section = 0 //Current section
     var adaptionRate = 50
     var brain = TBBrain() //Brain/idea generation
     var audioSystem = TBAudioSystem() //Audio system
@@ -75,7 +75,7 @@ public class TechnoBot {
     
     /// Generates a new sound and adds it to the audio system
     public func generateSound() {
-        /*
+        
         //let sound = TBFMSynthesiser()
         var sample = kickSamples[TechnoBot.randomInt(kickSamples.count)]
         let sound = TBSampler()
@@ -85,9 +85,8 @@ public class TechnoBot {
             unit.getTrack().add(noteNumber: 60, velocity: 100, position: AKDuration(beats: Double(i)), duration: AKDuration(beats: 1))
         }
         unit.getTrack().setLength(AKDuration(beats: 64))
-        //unit.addModifier(verb, slot: 1)
         audioSystem.addAudioUnit(unit)
-                
+        
         let clap = TBSampler()
         sample = percSamples[TechnoBot.randomInt(percSamples.count)]
         clap.loadSample(Bundle.main.url(forResource: sample, withExtension: "wav"))
@@ -117,9 +116,9 @@ public class TechnoBot {
         let fm = TBFMSynthesiser()
         let unit3 = TBAudioUnit(fm)
         var note = 0
-        for i in stride(from: 0, to: 4, by: 0.25) {
+        for i in stride(from: 0, to: 4, by: 0.5) {
             if(TechnoBot.randomInt(100) < 25) {
-                note = TechnoBot.randomInt(10)
+                note = TechnoBot.randomInt(50)
                 unit3.getTrack().add(noteNumber: MIDINoteNumber(note), velocity: 100, position: AKDuration(beats: Double(i)), duration: AKDuration(beats: 0.5))
             }
         }
@@ -127,7 +126,9 @@ public class TechnoBot {
         let verb = TBReverbModifier()
         unit3.addModifier(verb, slot: 1)
         audioSystem.addAudioUnit(unit3)
-        */
+ 
+        audioSystem.pushChanges()
+ 
     }
     
     private func mutateSound() {

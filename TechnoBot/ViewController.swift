@@ -18,25 +18,12 @@ class ViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var beat: NSTextField!
     @IBOutlet var log: NSTextView!
     @IBOutlet weak var play: NSButton!
+    @IBOutlet weak var record: NSButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.window?.backgroundColor = NSColor.blue
-    }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-    
-    override func viewDidAppear() {
-        self.view.window?.delegate = self
-    }
-    
-    private func windowShouldClose(_ sender: NSWindow) {
-        NSApplication.shared.terminate(self)
-    }
+    override func viewDidLoad() { super.viewDidLoad() }
+    override var representedObject: Any? { didSet {} }
+    override func viewDidAppear() { self.view.window?.delegate = self }
+    private func windowShouldClose(_ sender: NSWindow) { NSApplication.shared.terminate(self) }
     
     func setBeat(_ beat: Int) {
         let s16 = (ceil(beat/16)-1).truncatingRemainder(dividingBy: 4)
@@ -53,15 +40,20 @@ class ViewController: NSViewController, NSWindowDelegate {
         else { sender.state = NSControl.StateValue(rawValue: 0) }
     }
     
+    @IBAction func togRecord(_ sender: NSButton) {
+        if(TechnoBot.shared.togRecord()) { sender.state = NSControl.StateValue(rawValue: 1) }
+        else { sender.state = NSControl.StateValue(rawValue: 0) }
+    }
+    
     @IBAction func resetSystem(_ sender: NSButton) {
         TechnoBot.shared.reset()
         play.state = NSControl.StateValue(rawValue: 0)
     }
+    
+    
     
     func writeLog(_ s: String) {
         log.textStorage?.append(NSAttributedString(string: s + "\n"))
         log.scrollToEndOfDocument(self)
     }
 }
-
-

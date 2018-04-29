@@ -23,6 +23,7 @@ public class TBModifierGroup {
     
     public func setInput(_ input: AKNode) {
         self.input = input
+        chainModifiers()
     }
     
     public func setModifier(modifier: TBAudioModifier, slot: Int) {
