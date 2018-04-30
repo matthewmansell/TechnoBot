@@ -74,16 +74,8 @@ public class TBAudioSystem {
             try recorder?.record()
             TechnoBot.shared.log("Recording to \"" + fileURL!.absoluteString + "\"") //Notify location
         } catch { TechnoBot.shared.log("Could not start recording.") }
-        
-        //TechnoBot.shared.log("Recording to \"" + fileURL!.absoluteString + "\"") //Notify location
-        //let file = URL(fileURLWithPath: <#T##String#>)
-        
-        //let file = AKAudioFile()
-        //recorder = AKNodeRecorder(node: modifiers.getOutput(), file:)
-        //do{ try recorder.record() } catch {}
-        
     }
-    public func stopRecording() { recorder?.stop(); recorder = nil }
+    public func stopRecording() { recorder?.stop(); recorder = nil; TechnoBot.shared.log("") }
     public func isRecording() -> Bool {
         if(recorder != nil) { return recorder!.isRecording }
         else { return false }
@@ -117,11 +109,10 @@ public class TBAudioSystem {
     
     public func removeAudioModifier() {}
     
-    /// Called once per beat
-    public func tickOn() {
-        TechnoBot.shared.updateTimer(sequencer.getBeat())
-    }
-    //Called at end of beat
+    /// Called once per beat, updates timer.
+    public func tickOn() { TechnoBot.shared.updateTimer(sequencer.getBeat()) }
+    
+    /// Called at end of beat
     public func tickOff() {
         if(sequencer.getBeat() == 64) {
             sequencer.pause()
@@ -132,7 +123,7 @@ public class TBAudioSystem {
         }
     }
     
-    /// Re-chains audio streams
+    /// Re-chains audio streams including new content.
     public func pushChanges() {
         mixer = AKMixer() //Reset mixer
         for unit in audioUnits { mixer.connect(input: unit.getOutput()) } //Add all instruments

@@ -14,34 +14,17 @@ public class TechnoBot {
     
     public static let shared = TechnoBot() //Shared/Singleton instance
     
-    //Index applies to section number
-    let SECTIONS = ["buildup", "dance", "breakdown"] //Section relevance
-    let PROGRESSION_CHANCE = [50, 25, 50] //Chance to progress sections
-    let ADDITION_CHANCE = [75, 50, 0] //Chance of generating/adding a new sound
-    let MUTATION_CHANCE = [25, 25, 25] //Chance of mutating a sound
-    //Samples
-    let kickSamples = ["kick_01", "kick_02", "kick_03", "kick_05", "kick_05", "kick_06", "kick_07", "kick_08"]
-    let hatSamples = ["hat_01", "hat_02", "hat_03", "hat_04", "hat_05", "hat_06", "hat_07", "hat_08"]
-    let clapSamples = ["clap_01", "clap_02", "clap_03", "clap_04"]
-    let snareSamples = ["snare_01", "snare_02", "snare_03", "snare_04", "snare_05", "snare_06", "snare_07", "snare_08"]
-    let rimSamples = ["rim_01", "rim_02", "rim_03", "rim_04"]
-    let percSamples = ["perc_01", "perc_02", "perc_03", "perc_04", "perc_05", "perc_06", "perc_07", "perc_08"]
-    
     let vc = NSApplication.shared.mainWindow?.contentViewController as! ViewController //VC Pointer
     
-    var section = 0 //Current section
-    var adaptionRate = 50
     var brain = TBBrain() //Brain/idea generation
     var audioSystem = TBAudioSystem() //Audio system
-    
-    public func progressionChance() -> Int { return PROGRESSION_CHANCE[section] * adaptionRate }
     
     /// Play/pause audio system, initialises system on first play.
     public func togPlaying() -> Bool {
         if(!audioSystem.isPlaying()) {
             log("Playing...")
             if(audioSystem.audioUnitCount() == 0) { //Not yet started?
-                generateSound() //Generate initial audio
+                processSection() //Generate initial audio
                 audioSystem.play() //Start
             } else { audioSystem.play() } //Resume
         } else { //Pause
@@ -64,18 +47,15 @@ public class TechnoBot {
         audioSystem = TBAudioSystem() //Re-initialise audio system
     }
     
-    /// Pushes stored changes and then generates ones for next round.
-    public func processChunk() {
-        if(TechnoBot.randomInt(100) < PROGRESSION_CHANCE[section]) {
-            section += 1; //Progress section
-            if(section > SECTIONS.count) { section = 0 } //Loop back
-        }
-        
+    /// Pushes stored changes and then generates ones for next sectionaz.
+    public func processSection() {
+        audioSystem.pushChanges() //Push stored changes
+        brain.generateSection(audioSystem) //Generate new changes
     }
     
     /// Generates a new sound and adds it to the audio system
     public func generateSound() {
-        
+        /*
         //let sound = TBFMSynthesiser()
         var sample = kickSamples[TechnoBot.randomInt(kickSamples.count)]
         let sound = TBSampler()
@@ -128,11 +108,7 @@ public class TechnoBot {
         audioSystem.addAudioUnit(unit3)
  
         audioSystem.pushChanges()
- 
-    }
-    
-    private func mutateSound() {
-        
+ */
     }
     
     /// Write to log
