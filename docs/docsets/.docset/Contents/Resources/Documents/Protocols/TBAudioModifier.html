@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TBAudioModifier Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/TBAudioModifier" class="dashAnchor"></a>
+    <a title="TBAudioModifier Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (53% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        TBAudioModifier Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/TBAudioSystem.html">TBAudioSystem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBAudioUnit.html">TBAudioUnit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBAutomator.html">TBAutomator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBBlankModifier.html">TBBlankModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBBrain.html">TBBrain</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBCallbackInstrument.html">TBCallbackInstrument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBDistortionModifier.html">TBDistortionModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBFMSynthesiser.html">TBFMSynthesiser</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:9TechnoBot9TBFactoryC">TBFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBModifierGroup.html">TBModifierGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBReverbModifier.html">TBReverbModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBSampler.html">TBSampler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:9TechnoBot9TBSectionC">TBSection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBSequencer.html">TBSequencer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TBTickInstrument.html">TBTickInstrument</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TechnoBot.html">TechnoBot</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ModifierIntensity.html">ModifierIntensity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RecognisedSoundTag.html">RecognisedSoundTag</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Section.html">Section</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/TBAudioModifier.html">TBAudioModifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TBInstrument.html">TBInstrument</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>TBAudioModifier</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TBAudioModifier</span></code></pre>
+
+                </div>
+              </div>
+            <p>Protocol for which instruments to adhere</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9TechnoBot15TBAudioModifierP8setInputy8AudioKit6AKNodeCF"></a>
+                    <a name="//apple_ref/swift/Method/setInput(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9TechnoBot15TBAudioModifierP8setInputy8AudioKit6AKNodeCF">setInput(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Must be able to set the input</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setInput</span><span class="p">(</span><span class="n">_</span> <span class="nv">input</span><span class="p">:</span> <span class="kt">AKNode</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9TechnoBot15TBAudioModifierP9getOutput8AudioKit6AKNodeCyF"></a>
+                    <a name="//apple_ref/swift/Method/getOutput()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9TechnoBot15TBAudioModifierP9getOutput8AudioKit6AKNodeCyF">getOutput()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Must be able to get the output</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getOutput</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">AKNode</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9TechnoBot15TBAudioModifierP9duplicateAaB_pyF"></a>
+                    <a name="//apple_ref/swift/Method/duplicate()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9TechnoBot15TBAudioModifierP9duplicateAaB_pyF">duplicate()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Must be able to duplicate itself</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">duplicate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">TBAudioModifier</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:9TechnoBot15TBAudioModifierP7factoryAaB_pAA0D9IntensityOFZ"></a>
+                    <a name="//apple_ref/swift/Method/factory(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:9TechnoBot15TBAudioModifierP7factoryAaB_pAA0D9IntensityOFZ">factory(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Must have inbuilt factory</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">factory</span><span class="p">(</span><span class="n">_</span> <span class="nv">intensity</span><span class="p">:</span> <span class="kt"><a href="../Enums/ModifierIntensity.html">ModifierIntensity</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">TBAudioModifier</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-02)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

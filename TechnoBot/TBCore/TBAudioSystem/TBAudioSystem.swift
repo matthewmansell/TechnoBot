@@ -16,18 +16,23 @@ public class TBAudioSystem {
     let RECORDINGS_FOLDER = "TechnoBot_Recordings"
     let RECORD_FILE = "TBRecording"
     
-    var mixer = AKMixer() //Master bus
+    var unitMixer = AKMixer() //Unit bus
+    var masterMixer = AKMixer()
     var modifiers : TBModifierGroup //Master bus inserts
     var sequencer = TBSequencer() //Main Sequencer
     //var limiter : AKPeakLimiter? //Used as output, level safety is important!
     var recorder : AKNodeRecorder? = nil
     var recordingSettings: [String : Any] = [:] as [String : Any] //Specify recording settings?
     var section : TBSection?
+    var started = false;
     
     /// Initialises the audio system
     public init() {
-        modifiers = TBModifierGroup(mixer, slots: MOD_SLOTS)
+        modifiers = TBModifierGroup(unitMixer, slots: MOD_SLOTS)
+        AudioKit.output = masterMixer //Reset output
     }
+    
+    public func getOutput() -> AKNode { return masterMixer }
     
     public func play() {
         //do { try AudioKit.start()
@@ -60,7 +65,7 @@ public class TBAudioSystem {
         //FileManager.default.createFile(atPath: fileURL!.path, contents: nil, attributes: nil)
         do { let audioFile = try AKAudioFile(forWriting: fileURL!, settings: AKSettings.audioFormat.settings)
             //let m = AKMixer(); m.connect(input: limiter!)
-            try recorder = AKNodeRecorder(node: modifiers.getOutput(), file: audioFile)
+            try recorder = AKNodeRecorder(node: masterMixer, file: audioFile)
             try recorder?.record()
             TechnoBot.shared.log("Recording to \"" + fileURL!.absoluteString + "\"") //Notify location
         } catch { TechnoBot.shared.log("Could not start recording.") }
@@ -68,37 +73,13 @@ public class TBAudioSystem {
     public func stopRecording() { recorder?.stop(); recorder = nil; TechnoBot.shared.log("Recording stopped.") }
     public func isRecording() -> Bool { if(recorder != nil) { return recorder!.isRecording } else { return false } }
     
-    /// Adds an audio unit
-    //public func addAudioUnit(_ unit: TBAudioUnit) { audioUnits.append(unit) }
-    
-    /// Clears a given audio unit
-    /*
-    public func removeAudioUnit(_ unit: TBAudioUnit) {
-        var index = 0;
-        for i in 0..<audioUnits.count { if(unit === audioUnits[i]) { index = i; break } } //Same object
-        audioUnits.remove(at: index)
-    }
- */
-    //public func removeAllAudioUnits() { audioUnits.removeAll() }
-    /*
-    public func addModifier(_ modifier: TBAudioModifier, slot: Int? = nil) {
-        if(slot != nil) {
-            modifiers.setModifier(modifier: modifier, slot: slot!)
-        } else { }
-    }
-    public func removeModifier(_ slot: Int) {
-        modifiers.removeModifier(slot: slot)
-    }
- */
-    
     /// Called once per beat, updates timer.
     public func tickOn() { TechnoBot.shared.updateTimer(sequencer.getBeat()) }
     
     /// Called at end of beat
     public func tickOff() {
-        if(sequencer.getBeat() == 16) {
+        if(sequencer.getBeat() >= 32) {
             sequencer.pause()
-            //sequencer.rewind()
             TechnoBot.shared.processSection()
             sequencer.rewind()
             sequencer.play()
@@ -107,49 +88,54 @@ public class TBAudioSystem {
     
     /// Re-chains audio streams including new content.
     public func pushSection(_ newSection: TBSection) {
-        section = newSection
+        //section = newSection
         let wasPlaying = sequencer.isPlaying()
         sequencer = TBSequencer() //Reset sequencer
-        mixer = AKMixer() //Reset mixer
-        modifiers = TBModifierGroup(mixer, slots: MOD_SLOTS)
-        sequencer.connectAudioUnit(generateClick())
+        unitMixer = AKMixer() //Reset mixer
+        modifiers = TBModifierGroup(unitMixer, slots: MOD_SLOTS)
+        generateClick(sequencer)
         //TechnoBot.shared.log(String(audioUnitCount()))
         for unit in newSection.audioUnits {
-            mixer.connect(input: unit.getOutput())
+            unitMixer.connect(input: unit.getOutput())
             sequencer.connectAudioUnit(unit)
         } //Add all instruments
-        modifiers.setInput(mixer) //Reset modifier input
+        //modifiers.setInput(mixer) //Reset modifier input
         //limiter = AKPeakLimiter(modifiers.getOutput()) //Reset limiter
-        AudioKit.output = mixer //Reset output
+        //masterMixer.disconnectInput(bus: 0)
+        masterMixer.connect(input: modifiers.getOutput())
         if(wasPlaying) { play() }
-        do { try AudioKit.start()
-        } catch { AKLog("AudioKit did not start!"); TechnoBot.shared.log("Audio system did not start!") }
+        if(!started) {
+            do { try AudioKit.start()
+            } catch { AKLog("AudioKit did not start!"); }
+            started = true
+        }
     }
     
     //Internal click instrument
-    public func generateClick() -> TBAudioUnit {
+    public func generateClick(_ sequencer: TBSequencer) {
         //Generate sequencer event instrument
-        let eventInstrument = TBCallbackInstrument(noteDownCallback: tickOn, noteUpCallback: tickOff)
-        let au = TBAudioUnit(eventInstrument)
+        let tick = TBTickInstrument(noteDownCallback: tickOn, noteUpCallback: tickOff)
+        let track = sequencer.sequencer.newTrack()
+        track?.setMIDIOutput(tick.midiIn)
         for i in 0...64 {
-            au.musicTrack.add(noteNumber: 60, velocity: 100, position: AKDuration(beats: Double(i)), duration: AKDuration(beats: 1))
+            track!.add(noteNumber: 60, velocity: 100, position: AKDuration(beats: Double(i)), duration: AKDuration(beats: 1))
         }
-        //sequencer.connectAudioUnit(au)
-        return au
     }
-    
 }
 
-/// Custom instrument type for
-private class TBCallbackInstrument: TBInstrument {
+///Instrument allowing funcitons to be attatched to note up/down events.
+public class TBTickInstrument: AKMIDIInstrument {
     var noteDownCallback : () -> Void
     var noteUpCallback : () -> Void
     
-    init(noteDownCallback: @escaping () -> Void, noteUpCallback: @escaping () -> Void) {
+    /**
+     - Parameter noteDownCallBack: Function pointer for note down
+     - Parameter noteUpCallBack: Function pointer for note up
+     */
+    public init(noteDownCallback: @escaping () -> Void, noteUpCallback: @escaping () -> Void) {
         self.noteDownCallback = noteDownCallback
         self.noteUpCallback = noteUpCallback
         super.init(midiInputName: "TBCallbackInstrument")
-        super.instrumentID = "Callback"
     }
     
     //Called on note down
@@ -161,4 +147,3 @@ private class TBCallbackInstrument: TBInstrument {
         DispatchQueue.main.async { self.noteUpCallback() }
     }
 }
-

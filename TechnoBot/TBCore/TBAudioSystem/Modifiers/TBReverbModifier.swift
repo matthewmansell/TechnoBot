@@ -11,17 +11,28 @@ import AudioKit
 
 public class TBReverbModifier : TBAudioModifier {
     
-    public var reverb = AKReverb()
+    private var reverb = AKReverb()
     
-    public override func setInput(_ input: AKNode) {
+    public func setInput(_ input: AKNode) {
         reverb = AKReverb(input, dryWetMix: 0.1)
         reverb.start()
-        
-        //super.mixer = AKDryWetMixer(input, reverbUnit)
     }
     
-    public override func getOutput() -> AKNode {
-        return reverb
+    public func getOutput() -> AKNode { return reverb }
+    
+    public func duplicate() -> TBAudioModifier {
+        let duplicate = TBReverbModifier()
+        duplicate.reverb.dryWetMix = reverb.dryWetMix
+        return duplicate
+    }
+    
+    public static func factory(_ intensity: ModifierIntensity) -> TBAudioModifier {
+        let verb = TBReverbModifier()
+        switch intensity {
+        case .low: verb.reverb.dryWetMix = 0.1
+        case .high: verb.reverb.dryWetMix = 0.5
+        }
+        return verb
     }
     
 }

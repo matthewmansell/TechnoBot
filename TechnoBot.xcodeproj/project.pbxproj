@@ -17,7 +17,6 @@
 		C903F0D8204C6B5400BD911B /* TBAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903F0CB204C6B5400BD911B /* TBAudioUnit.swift */; };
 		C903F0D9204C6B5400BD911B /* TBModifierGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903F0CC204C6B5400BD911B /* TBModifierGroup.swift */; };
 		C903F0DB204C6B5400BD911B /* TBBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903F0CF204C6B5400BD911B /* TBBrain.swift */; };
-		C903F0DC204C6B5400BD911B /* TBIdea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903F0D0204C6B5400BD911B /* TBIdea.swift */; };
 		C95875CA2090777400A2C09F /* i3-256.png in Resources */ = {isa = PBXBuildFile; fileRef = C95875C92090777400A2C09F /* i3-256.png */; };
 		C95875CC2098E7B400A2C09F /* TBSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95875CB2098E7B400A2C09F /* TBSection.swift */; };
 		C9589F0F2083823600CB6B69 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C921E0A720837EE600EF97E9 /* AudioKit.framework */; };
@@ -69,7 +68,7 @@
 		C98512D9202E14EC00D8AE0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C98512D7202E14EC00D8AE0B /* Main.storyboard */; };
 		C9CD2517204FDD3A00DA7B6B /* TBFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD2516204FDD3A00DA7B6B /* TBFactory.swift */; };
 		C9CD251A204FDDB700DA7B6B /* TBFMSynthesiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD2519204FDDB700DA7B6B /* TBFMSynthesiser.swift */; };
-		C9CD251C204FDDC400DA7B6B /* TBIntrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD251B204FDDC400DA7B6B /* TBIntrument.swift */; };
+		C9CD251C204FDDC400DA7B6B /* TBInstrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD251B204FDDC400DA7B6B /* TBInstrument.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,7 +112,6 @@
 		C903F0CB204C6B5400BD911B /* TBAudioUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBAudioUnit.swift; sourceTree = "<group>"; };
 		C903F0CC204C6B5400BD911B /* TBModifierGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBModifierGroup.swift; sourceTree = "<group>"; };
 		C903F0CF204C6B5400BD911B /* TBBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBBrain.swift; sourceTree = "<group>"; };
-		C903F0D0204C6B5400BD911B /* TBIdea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBIdea.swift; sourceTree = "<group>"; };
 		C921E0A120837EE600EF97E9 /* AudioKit For macOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "AudioKit For macOS.xcodeproj"; path = "../../../../Downloads/AudioKit-master/AudioKit/macOS/AudioKit For macOS.xcodeproj"; sourceTree = "<group>"; };
 		C95875C92090777400A2C09F /* i3-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i3-256.png"; sourceTree = "<group>"; };
 		C95875CB2098E7B400A2C09F /* TBSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBSection.swift; sourceTree = "<group>"; };
@@ -167,7 +165,7 @@
 		C98512DB202E14EC00D8AE0B /* TechnoBot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TechnoBot.entitlements; sourceTree = "<group>"; };
 		C9CD2516204FDD3A00DA7B6B /* TBFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBFactory.swift; sourceTree = "<group>"; };
 		C9CD2519204FDDB700DA7B6B /* TBFMSynthesiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBFMSynthesiser.swift; sourceTree = "<group>"; };
-		C9CD251B204FDDC400DA7B6B /* TBIntrument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBIntrument.swift; sourceTree = "<group>"; };
+		C9CD251B204FDDC400DA7B6B /* TBInstrument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBInstrument.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,8 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				C903F0C2204C6B5400BD911B /* TechnoBot.swift */,
+				C903F0CF204C6B5400BD911B /* TBBrain.swift */,
 				C903F0C3204C6B5400BD911B /* TBAudioSystem */,
-				C903F0CE204C6B5400BD911B /* TBBrain */,
 			);
 			path = TBCore;
 			sourceTree = "<group>";
@@ -217,15 +215,6 @@
 				C903F0C6204C6B5400BD911B /* TBDistortionModifier.swift */,
 			);
 			path = Modifiers;
-			sourceTree = "<group>";
-		};
-		C903F0CE204C6B5400BD911B /* TBBrain */ = {
-			isa = PBXGroup;
-			children = (
-				C903F0CF204C6B5400BD911B /* TBBrain.swift */,
-				C903F0D0204C6B5400BD911B /* TBIdea.swift */,
-			);
-			path = TBBrain;
 			sourceTree = "<group>";
 		};
 		C921E0A220837EE600EF97E9 /* Products */ = {
@@ -401,7 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				C9CD2519204FDDB700DA7B6B /* TBFMSynthesiser.swift */,
-				C9CD251B204FDDC400DA7B6B /* TBIntrument.swift */,
+				C9CD251B204FDDC400DA7B6B /* TBInstrument.swift */,
 				C977BB02208A9460009EACDD /* TBSampler.swift */,
 			);
 			path = Instruments;
@@ -559,12 +548,11 @@
 				C903F0D5204C6B5400BD911B /* TBSequencer.swift in Sources */,
 				C9CD251A204FDDB700DA7B6B /* TBFMSynthesiser.swift in Sources */,
 				C903F0D8204C6B5400BD911B /* TBAudioUnit.swift in Sources */,
-				C903F0DC204C6B5400BD911B /* TBIdea.swift in Sources */,
 				C977BB03208A9460009EACDD /* TBSampler.swift in Sources */,
 				C903F0D7204C6B5400BD911B /* TBAudioModifier.swift in Sources */,
 				C903F0D3204C6B5400BD911B /* TBDistortionModifier.swift in Sources */,
 				C95875CC2098E7B400A2C09F /* TBSection.swift in Sources */,
-				C9CD251C204FDDC400DA7B6B /* TBIntrument.swift in Sources */,
+				C9CD251C204FDDC400DA7B6B /* TBInstrument.swift in Sources */,
 				C98512D2202E14EC00D8AE0B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

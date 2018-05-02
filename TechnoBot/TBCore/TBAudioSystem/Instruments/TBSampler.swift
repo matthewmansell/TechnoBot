@@ -11,14 +11,38 @@ import AudioKit
 
 /// Wrapper for AK Sampler
 public class TBSampler : TBInstrument {
-    
+
+    private var interfaceInstrument : TBCallbackInstrument?
     private var sampler = AKAppleSampler()
-    var sample = ""
+    private var sample = ""
+    
+    public var instrumentID = "Sampler"
+    public var tag: RecognisedSoundTag?
     
     init() {
-        super.init()
+        interfaceInstrument = TBCallbackInstrument(noteDownCallback: self.start, noteUpCallback: self.stop)
         instrumentID = "Sampler"
         loadSample("kick_01")
+    }
+    
+    public func midiIn() -> MIDIEndpointRef {
+        return interfaceInstrument!.midiIn
+    }
+    
+    public func start(noteNumber: MIDINoteNumber, velocity: MIDIVelocity) {
+        do { try sampler.play()
+        } catch { TechnoBot.shared.log("Sampler cannot play.") }
+    }
+    public func stop() {
+        do { try sampler.stop()
+        } catch { TechnoBot.shared.log("Sampler cannot stop.") }
+    }
+    public func getOutput() -> AKNode { return sampler }
+    
+    public func duplicate() -> TBInstrument {
+        let sampler = TBSampler()
+        sampler.loadSample(sample)
+        return sampler
     }
     
     public func loadSample(_ file: String) {
@@ -32,19 +56,8 @@ public class TBSampler : TBInstrument {
         }
     }
     
-    override public func start(noteNumber: MIDINoteNumber, velocity: MIDIVelocity, channel: MIDIChannel) {
-        do { try sampler.play()
-        } catch { TechnoBot.shared.log("Sampler cannot play.") }
-    }
-    /// Not used in sampler
-    override public func stop(noteNumber: MIDINoteNumber, channel: MIDIChannel) {
-        do { try sampler.stop()
-        } catch { TechnoBot.shared.log("Sampler cannot stop.") }
-    }
-    override public func getOutput() -> AKNode { return sampler }
-    override public func duplicate() -> TBInstrument {
+    public static func factory() -> TBInstrument {
         let sampler = TBSampler()
-        sampler.loadSample(sample)
         return sampler
     }
 }

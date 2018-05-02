@@ -11,12 +11,27 @@ import AudioKit
 
 public class TBDistortionModifier : TBAudioModifier {
     
-    public var distortionUnit = AKDistortion()
+    private var distortion = AKDistortion()
     
-    public override func setInput(_ input: AKNode) {
-        distortionUnit = AKDistortion(input)
-        distortionUnit.start()
-        //super.mixer = AKDryWetMixer(input, distortionUnit)
+    public func setInput(_ input: AKNode) {
+        distortion = AKDistortion(input)
+        distortion.start()
+    }
+    public func getOutput() -> AKNode { return distortion }
+    
+    public func duplicate() -> TBAudioModifier {
+        let duplicate = TBDistortionModifier()
+        //duplicate.distortion.
+        return duplicate
+    }
+    
+    public static func factory(_ intensity: ModifierIntensity) -> TBAudioModifier {
+        let distortion = TBDistortionModifier()
+        ///switch intensity {
+        ///case .low: distortion.distortion.
+        ///case .high: (verb.modifier as! AKReverb).dryWetMix = 0.5
+        ///}
+        return distortion
     }
     
     

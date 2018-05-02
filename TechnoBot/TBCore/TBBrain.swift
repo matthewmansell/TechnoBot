@@ -14,9 +14,10 @@ public enum RecognisedSoundTag:String {
     case kick = "kick", clap = "clap", snare = "snare", rim = "rim", hat = "hat", perc = "perc", fm = "fm"
     static func random() -> RecognisedSoundTag {
         let list = [self.kick, self.clap, self.snare, self.rim, self.hat, self.perc, self.fm]
-        return list[TechnoBot.randomInt(list.count-1)]
+        return list[TechnoBot.randomInt(list.count)]
     }
 }
+
 
 /// Responsible for generating and modifying content. Processing handled by utility functions.
 public class TBBrain {
@@ -42,43 +43,39 @@ public class TBBrain {
     var modifiers = [TBAudioModifier]() //Modifiers to be added to system (main bus)
     
     
-    var alt = true
+    var newSection = TBSection()
     
     init() {
-        var au = TBAudioUnit(genInstrument(RecognisedSoundTag.perc))
-        genScore(au, notePattern: [[1,1],[1,1],[1,1],[1,1]], beatCoverage: 2) //Kick pattern
-        audioUnits.append(au)
+        //var au = TBAudioUnit(genInstrument(RecognisedSoundTag.perc))
+        //genScore(au, notePattern: [[1,1],[1,1],[1,1],[1,1]], beatCoverage: 2) //Kick pattern
+        //audioUnits.append(au)
     }
     
     public func generateSection() -> TBSection {
-        let newSection = TBSection() //To return
-        //TechnoBot.shared.log("Generating next section...")
+        let newSection = TBSection() //Reset
         
-        //if(audioUnits.count == 0) { audioUnits.append(genAudioUnit()) }
-        //if(shouldAdapt(ADDITION_CHANCE)) { audioUnits.append(genAudioUnit()) }
-        //if(shouldAdapt(REMOVAL_CHANCE)) { print("removing") }
-        //if(shouldAdapt(MUTATION_CHANCE)) { print("adding") }
-        //print("result = "+String(reducingChance(90.0, chanceReduction: 0.9)))
-        //let _ = genAudioUnit()
-        
-        
-        //let au = audioUnits[0].duplicate()
-        //genScore(au, notePattern: [[1,1],[1,1],[1,1],[1,1]], beatCoverage: 2) //Kick pattern
-        //newSection.audioUnits.append(au)
-        
-        for unit in audioUnits {
-            newSection.audioUnits.append(unit.duplicate())
+        if(audioUnits.count == 0) { audioUnits.append(genAudioUnit()) } //At least 1 sound
+        var rounds = reducingChance(50)
+        for i in 0..<rounds {
+            if(shouldAdapt(ADDITION_CHANCE)) { audioUnits.append(genAudioUnit()) }
+            if(shouldAdapt(REMOVAL_CHANCE)) { }
+            //if(shouldAdapt(MUTATION_CHANCE)) { print("adding") }
+            //print("result = "+String(reducingChance(90.0, chanceReduction: 0.9)))
         }
-        
-        //newSection.audioUnits.append(contentsOf: audioUnits)
         
         //Prepare for next section
         if(shouldAdapt(PROGRESSION_CHANCE)) { //Move section?
             if(section == Section.buildup) { section = Section.dance }
             else if(section == Section.dance) { section = Section.breakdown }
             else if(section == Section.breakdown) { section = Section.buildup }
-            print(SECTION_STRING[section.rawValue])
+            newSection.notes.append("Moving to "+SECTION_STRING[section.rawValue]+" section.")
         }
+        
+        for unit in audioUnits {
+            unit.instrument.start(noteNumber: 10, velocity: 100); unit.instrument.stop() //Removes glitch
+            newSection.audioUnits.append(unit.duplicate())
+            unit.lifetime += 1
+        } //Write section
         
         return newSection
     }
@@ -102,12 +99,16 @@ public class TBBrain {
         //Decide unit type, search current unit tags
         var tags = [RecognisedSoundTag]()
         for unit in audioUnits { if(unit.getTag() != nil) {tags.append(unit.getTag()!)} }
+        print(tags)
         //Overwrite specials
-        if(!tags.contains(RecognisedSoundTag.kick) && section == Section.dance) { //Must have kick
+        if(!tags.contains(RecognisedSoundTag.kick) && section == Section.dance) { //Must have kick in a dance section
             let kick = TBAudioUnit(genInstrument(RecognisedSoundTag.kick))
             genScore(kick, notePattern: [[1,1],[1,1],[1,1],[1,1]], beatCoverage: 4) //Kick pattern
-            //return kick
+            newSection.notes.append("Added kick")
+            return kick
         }
+        
+        //Else random
         let newUnit = TBAudioUnit(genInstrument())
         genScore(newUnit)
         return newUnit
@@ -158,7 +159,7 @@ public class TBBrain {
     }
     
     private func genModifier() -> TBAudioModifier {
-        let newModifier = TBAudioModifier()
+        let newModifier = TBBlankModifier()
         return newModifier
     }
     
@@ -173,7 +174,7 @@ public class TBBrain {
         var pattern = notePattern, coverage = beatCoverage //Editable
         if(pattern == nil) { //Gen note pattern
             var iterations = reducingChance(95.0, chanceReduction: 0.8), length = 2
-            while(length < 64 && iterations > 0) { length *= 2; iterations -= 1 } //Doubling length gives 1,2,4,8 etc..
+            while(length < 32 && iterations > 0) { length *= 2; iterations -= 1 } //Doubling length gives 1,2,4,8 etc..
             pattern = Array(repeating: Array(repeating: 0, count: 2), count: length) //Empty pattern of length n
             let noteChance = TechnoBot.randomInt(100) //Chance of note addition
             for i in 0..<pattern!.count {
@@ -185,23 +186,11 @@ public class TBBrain {
         }
         if(coverage == nil) { //Gen beat coverage
             var iterations = reducingChance(75.0); coverage = 1
-            while(coverage! < 64 && iterations > 0) { coverage! *= 2; iterations -= 1 } //Doubling lenght gives 1,2,4,8 etc..
+            while(coverage! < 64 && iterations > 0) { coverage! *= 2; iterations -= 1 } //Doubling length gives 1,2,4,8 etc..
+            while((Double(coverage!)/Double(pattern!.count)) < 0.25) { coverage! *= 2 }
         }
-        //print(pattern!)
-        //Fill pattern over 64 beats
-        let noteGap = Double(coverage!)/Double(pattern!.count); //print(noteGap)
-        for i in 0..<(64/coverage!) {
-            var position : Double = 0 + i//Note potition
-            for note in pattern! {
-                if(note[0] != 0) { //0 is no note
-                    var noteLength = noteGap * note[1];
-                    if(50<TechnoBot.randomInt(100)) { noteLength = noteGap/2 }
-                    unit.musicTrack.add(noteNumber: MIDINoteNumber(note[0]), velocity: 100, position: AKDuration(beats: position), duration: AKDuration(beats: noteLength))
-                }
-                position += noteGap
-            }
-        }
-        unit.origScore = pattern! //Copy original pattern
+        
+        unit.writeScore(pattern: pattern!, coverage: coverage!)
     }
     
     private func mutateAudioUnit(_ unit: TBAudioUnit) {

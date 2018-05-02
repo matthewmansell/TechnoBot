@@ -9,6 +9,7 @@
 import Foundation
 import Cocoa
 import AudioKit
+import AudioKitUI
 
 class ViewController: NSViewController, NSWindowDelegate {
     
@@ -19,8 +20,14 @@ class ViewController: NSViewController, NSWindowDelegate {
     @IBOutlet var log: NSTextView!
     @IBOutlet weak var play: NSButton!
     @IBOutlet weak var record: NSButton!
+    @IBOutlet weak var audioPlot: EZAudioPlot!
     
-    override func viewDidLoad() { super.viewDidLoad() }
+    var plot : AKNodeOutputPlot? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
     override var representedObject: Any? { didSet {} }
     override func viewDidAppear() { self.view.window?.delegate = self }
     private func windowShouldClose(_ sender: NSWindow) { NSApplication.shared.terminate(self) }
@@ -33,6 +40,18 @@ class ViewController: NSViewController, NSWindowDelegate {
         seq4.doubleValue = s4
         seq1.doubleValue = s1
         self.beat.stringValue = String(beat)
+    }
+    
+    func setupPlot(_ node: AKNode) {
+        plot = AKNodeOutputPlot(node, frame: audioPlot.bounds)
+        plot!.plotType = .buffer
+        plot!.shouldFill = true
+        //plot!.shouldMirror = true
+        plot!.color = NSColor.blue
+        plot!.backgroundColor = NSColor.clear
+        plot!.gain = 2
+        //plot!.autoresizingMask = NSView.AutoresizingMask.width
+        audioPlot.addSubview(plot!)
     }
     
     @IBAction func toggleSeq(_ sender: NSButton) {

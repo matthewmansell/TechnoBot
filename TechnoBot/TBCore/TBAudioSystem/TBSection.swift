@@ -12,4 +12,5 @@ import Foundation
 public class TBSection {
     var audioUnits = [TBAudioUnit]() //All audio units
     var masterModifiers = [TBAudioModifier]() //Modifiers to apply to master bus
+    var notes = [String]()
 }

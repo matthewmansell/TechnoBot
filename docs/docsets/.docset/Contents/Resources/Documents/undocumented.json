@@ -1,0 +1,411 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Factories/TBFactory.swift",
+      "line": 11,
+      "symbol": "TBFactory",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Instruments/TBFMSynthesiser.swift",
+      "line": 40,
+      "symbol": "TBFMSynthesiser.pitchBend(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Instruments/TBSampler.swift",
+      "line": 48,
+      "symbol": "TBSampler.loadSample(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBAudioModifier.swift",
+      "line": 12,
+      "symbol": "ModifierIntensity",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBAudioModifier.swift",
+      "line": 12,
+      "symbol": "ModifierIntensity.high",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBAudioModifier.swift",
+      "line": 12,
+      "symbol": "ModifierIntensity.low",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBAudioModifier.swift",
+      "line": 26,
+      "symbol": "TBBlankModifier.input",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBDistortionModifier.swift",
+      "line": 12,
+      "symbol": "TBDistortionModifier",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBReverbModifier.swift",
+      "line": 12,
+      "symbol": "TBReverbModifier",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift",
+      "line": 12,
+      "symbol": "TBAudioSystem",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift",
+      "line": 35,
+      "symbol": "TBAudioSystem.play()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift",
+      "line": 40,
+      "symbol": "TBAudioSystem.pause()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift",
+      "line": 45,
+      "symbol": "TBAudioSystem.isPlaying()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift",
+      "line": 71,
+      "symbol": "TBAudioSystem.stopRecording()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift",
+      "line": 72,
+      "symbol": "TBAudioSystem.isRecording()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift",
+      "line": 113,
+      "symbol": "TBAudioSystem.generateClick(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 22,
+      "symbol": "TBAudioUnit.init(_:modifierSlots:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 30,
+      "symbol": "TBAudioUnit.incrementLife()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 32,
+      "symbol": "TBAudioUnit.addModifier(_:slot:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 38,
+      "symbol": "TBAudioUnit.removeModifier(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 42,
+      "symbol": "TBAudioUnit.getOutput()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 46,
+      "symbol": "TBAudioUnit.getTag()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 47,
+      "symbol": "TBAudioUnit.setTag(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 49,
+      "symbol": "TBAudioUnit.writeScore(pattern:coverage:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift",
+      "line": 65,
+      "symbol": "TBAudioUnit.duplicate()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAutomator.swift",
+      "line": 11,
+      "symbol": "TBAutomator",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAutomator.swift",
+      "line": 17,
+      "symbol": "TBAutomator.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBModifierGroup.swift",
+      "line": 18,
+      "symbol": "TBModifierGroup.init(_:slots:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBModifierGroup.swift",
+      "line": 24,
+      "symbol": "TBModifierGroup.setInput(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBModifierGroup.swift",
+      "line": 29,
+      "symbol": "TBModifierGroup.setModifier(modifier:slot:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBModifierGroup.swift",
+      "line": 34,
+      "symbol": "TBModifierGroup.removeModifier(slot:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBModifierGroup.swift",
+      "line": 39,
+      "symbol": "TBModifierGroup.getModifier(slot:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBModifierGroup.swift",
+      "line": 43,
+      "symbol": "TBModifierGroup.getOutput()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift",
+      "line": 12,
+      "symbol": "TBSequencer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift",
+      "line": 20,
+      "symbol": "TBSequencer.play()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift",
+      "line": 21,
+      "symbol": "TBSequencer.pause()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift",
+      "line": 22,
+      "symbol": "TBSequencer.isPlaying()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift",
+      "line": 23,
+      "symbol": "TBSequencer.getBeat()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift",
+      "line": 24,
+      "symbol": "TBSequencer.rewind()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift",
+      "line": 29,
+      "symbol": "TBSequencer.connectAudioUnit(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 12,
+      "symbol": "Section",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 12,
+      "symbol": "Section.breakdown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 12,
+      "symbol": "Section.buildup",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 12,
+      "symbol": "Section.dance",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 13,
+      "symbol": "RecognisedSoundTag",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 14,
+      "symbol": "RecognisedSoundTag.clap",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 14,
+      "symbol": "RecognisedSoundTag.fm",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 14,
+      "symbol": "RecognisedSoundTag.hat",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 14,
+      "symbol": "RecognisedSoundTag.kick",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 14,
+      "symbol": "RecognisedSoundTag.perc",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 14,
+      "symbol": "RecognisedSoundTag.rim",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 14,
+      "symbol": "RecognisedSoundTag.snare",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 54,
+      "symbol": "TBBrain.generateSection()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift",
+      "line": 84,
+      "symbol": "TBBrain.setAdaptionRate(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TechnoBot.swift",
+      "line": 13,
+      "symbol": "TechnoBot",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TechnoBot.swift",
+      "line": 15,
+      "symbol": "TechnoBot.shared",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TechnoBot.swift",
+      "line": 41,
+      "symbol": "TechnoBot.togRecord()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TechnoBot.swift",
+      "line": 47,
+      "symbol": "TechnoBot.reset()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot"
+}

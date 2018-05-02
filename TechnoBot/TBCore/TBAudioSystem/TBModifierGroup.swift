@@ -17,7 +17,7 @@ public class TBModifierGroup {
     
     public init(_ input: AKNode, slots: Int = 5) {
         self.input = input
-        for _ in 0...slots-1 { modifiers.append(TBAudioModifier()) } //Initialise elements
+        for _ in 0...slots-1 { modifiers.append(TBBlankModifier()) } //Initialise elements
         chainModifiers()
     }
     
@@ -32,7 +32,7 @@ public class TBModifierGroup {
     }
     
     public func removeModifier(slot: Int) {
-        modifiers[slot] = TBAudioModifier()
+        modifiers[slot] = TBBlankModifier()
         chainModifiers()
     }
     

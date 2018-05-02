@@ -1,0 +1,21 @@
+version: "Apple Swift version 4.1 (swiftlang-902.0.48 clang-902.0.37.1)"
+options: "c34d99b585f655c9793f1646c5637052"
+build_time: [1525275764, 366624000]
+inputs:
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBReverbModifier.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBBrain.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/ViewController.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAutomator.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBModifierGroup.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Factories/TBFactory.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioSystem.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TechnoBot.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSequencer.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Instruments/TBFMSynthesiser.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBAudioUnit.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Instruments/TBSampler.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBAudioModifier.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Modifiers/TBDistortionModifier.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/TBSection.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/TBCore/TBAudioSystem/Instruments/TBInstrument.swift": [9223372036, 854775807]
+  "/Users/matt/Documents/BSc_Computing/CO659-Computational_Creativity/TechnoBot/TechnoBot/AppDelegate.swift": [9223372036, 854775807]

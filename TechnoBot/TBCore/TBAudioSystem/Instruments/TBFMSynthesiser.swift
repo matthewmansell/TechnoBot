@@ -12,24 +12,41 @@ import AudioKit
 /// Wrapper for AKFM Oscillator
 public class TBFMSynthesiser : TBInstrument {
     
+    private var interfaceInstrument : TBCallbackInstrument?
     private var fMO = AKFMOscillator()
-    var x = 0;
+    
+    public var instrumentID = "FM"
+    public var tag: RecognisedSoundTag?
     
     init() {
-        super.init()
-        instrumentID = "FM"
+        interfaceInstrument = TBCallbackInstrument(noteDownCallback: self.start, noteUpCallback: self.stop)
         fMO.presetWobble()
         fMO.amplitude = 0.08
     }
     
-    override public func start(noteNumber: MIDINoteNumber, velocity: MIDIVelocity, channel: MIDIChannel) {
-        print(x); x+=1
+    public func midiIn() -> MIDIEndpointRef {
+        return interfaceInstrument!.midiIn
+    }
+    
+    public func start(noteNumber: MIDINoteNumber, velocity: MIDIVelocity) {
         fMO.baseFrequency = noteNumber.midiNoteToFrequency()
         //fMO.carrierMultiplier = noteNumber.midiNoteToFrequency()-5
         fMO.start()
     }
     
-    override public func stop(noteNumber: MIDINoteNumber, channel: MIDIChannel) { fMO.stop() }
-    override public func getOutput() -> AKNode { return fMO }
-    override public func pitchBend(_ time: Double) { fMO.rampTime = time }
+    public func stop() { fMO.stop() }
+    
+    public func getOutput() -> AKNode { return fMO }
+    public func pitchBend(_ time: Double) { fMO.rampTime = time }
+    
+    public func duplicate() -> TBInstrument {
+        let fm = TBFMSynthesiser()
+        fm.tag = self.tag!
+        return fm
+        
+    }
+    public static func factory() -> TBInstrument {
+        let fm = TBFMSynthesiser()
+        return fm
+    }
 }
