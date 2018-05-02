@@ -13,14 +13,20 @@ import AudioKit
 public class TBAudioUnit {
     
     var lifetime = 0 //Chunks survived
-    var score = AKMusicTrack() //Midi
+    var origScore = [[Double]]()
+    var coverage = 1
+    var musicTrack = AKMusicTrack() //Midi
     var instrument: TBInstrument //Instrument
     var modifierGroup : TBModifierGroup //Modifiers
+    //var tag : RecognisedSoundTag? = nil //Tag?
     
     public init(_ instrument: TBInstrument, modifierSlots: Int = 5) {
         self.instrument = instrument
         modifierGroup = TBModifierGroup(instrument.getOutput(), slots: modifierSlots)
-        score.setMIDIOutput(instrument.midiIn)
+        musicTrack.setMIDIOutput(instrument.midiIn)
+    }
+    deinit {
+        print("Deinit"+instrument.instrumentID)
     }
     
     public func incrementLife() { lifetime += 1 }
@@ -35,10 +41,16 @@ public class TBAudioUnit {
         modifierGroup.removeModifier(slot: slot)
     }
     
-    public func getTrack() -> AKMusicTrack { return score }
-    
     public func getOutput() -> AKNode {
         return modifierGroup.getOutput() //Last modifier is output
+    }
+    
+    public func getTag() -> RecognisedSoundTag? { return instrument.tag }
+    public func setTag(_ tag: RecognisedSoundTag) { instrument.tag = tag }
+    
+    public func duplicate() -> TBAudioUnit {
+        let au = TBAudioUnit(instrument.duplicate())
+        return au
     }
     
 }

@@ -19,19 +19,23 @@ public class TechnoBot {
     var brain = TBBrain() //Brain/idea generation
     var audioSystem = TBAudioSystem() //Audio system
     
+    var newSection = TBSection()
+    
+    init() {
+        newSection = brain.generateSection()
+        processSection()
+    }
+    
     /// Play/pause audio system, initialises system on first play.
     public func togPlaying() -> Bool {
         if(!audioSystem.isPlaying()) {
             log("Playing...")
-            if(audioSystem.audioUnitCount() == 0) { //Not yet started?
-                processSection() //Generate initial audio
-                audioSystem.play() //Start
-            } else { audioSystem.play() } //Resume
+            audioSystem.play() //Start
         } else { //Pause
-            log("System paused.")
             audioSystem.pause()
+            log("System paused.")
         }
-        return audioSystem.isPlaying()
+        return audioSystem.isPlaying() //Return current status to caller
     }
     
     public func togRecord() -> Bool {
@@ -41,16 +45,20 @@ public class TechnoBot {
     }
     
     public func reset() {
-        log("System reset.")
         audioSystem.pause() //Pause for safety
         brain = TBBrain() //Re-initialise brain
         audioSystem = TBAudioSystem() //Re-initialise audio system
+        newSection = brain.generateSection()
+        processSection()
+        log("System reset.")
     }
     
     /// Pushes stored changes and then generates ones for next sectionaz.
     public func processSection() {
-        audioSystem.pushChanges() //Push stored changes
-        brain.generateSection(audioSystem) //Generate new changes
+        //var section = TBSection()
+        //audioSystem.pushSection(section)
+        audioSystem.pushSection(newSection) //Push stored changes
+        newSection = brain.generateSection() //Generate new changes
     }
     
     /// Generates a new sound and adds it to the audio system
@@ -108,7 +116,7 @@ public class TechnoBot {
         audioSystem.addAudioUnit(unit3)
  
         audioSystem.pushChanges()
- */
+         */
     }
     
     /// Write to log
@@ -121,5 +129,4 @@ public class TechnoBot {
     
     /// Random number utility
     static func randomInt(_ n: Int) -> Int { return Int(arc4random_uniform(UInt32(n))) }
-    
 }

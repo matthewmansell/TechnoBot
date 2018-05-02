@@ -28,8 +28,7 @@ public class TBSequencer  {
     
     public func connectAudioUnit(_ unit: TBAudioUnit) {
         let t = sequencer.newTrack()
-        unit.getTrack().copyAndMergeTo(musicTrack: t!)
+        unit.musicTrack.copyAndMergeTo(musicTrack: t!)
         t?.setMIDIOutput(unit.instrument.midiIn)
-        //sequencer.tracks.append(track)
     }
 }

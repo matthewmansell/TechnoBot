@@ -19,6 +19,7 @@
 		C903F0DB204C6B5400BD911B /* TBBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903F0CF204C6B5400BD911B /* TBBrain.swift */; };
 		C903F0DC204C6B5400BD911B /* TBIdea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903F0D0204C6B5400BD911B /* TBIdea.swift */; };
 		C95875CA2090777400A2C09F /* i3-256.png in Resources */ = {isa = PBXBuildFile; fileRef = C95875C92090777400A2C09F /* i3-256.png */; };
+		C95875CC2098E7B400A2C09F /* TBSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95875CB2098E7B400A2C09F /* TBSection.swift */; };
 		C9589F0F2083823600CB6B69 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C921E0A720837EE600EF97E9 /* AudioKit.framework */; };
 		C9589F142083F11E00CB6B69 /* AudioKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C921E0A920837EE600EF97E9 /* AudioKitUI.framework */; };
 		C977BB03208A9460009EACDD /* TBSampler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977BB02208A9460009EACDD /* TBSampler.swift */; };
@@ -115,6 +116,7 @@
 		C903F0D0204C6B5400BD911B /* TBIdea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBIdea.swift; sourceTree = "<group>"; };
 		C921E0A120837EE600EF97E9 /* AudioKit For macOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "AudioKit For macOS.xcodeproj"; path = "../../../../Downloads/AudioKit-master/AudioKit/macOS/AudioKit For macOS.xcodeproj"; sourceTree = "<group>"; };
 		C95875C92090777400A2C09F /* i3-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i3-256.png"; sourceTree = "<group>"; };
+		C95875CB2098E7B400A2C09F /* TBSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBSection.swift; sourceTree = "<group>"; };
 		C977BB02208A9460009EACDD /* TBSampler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBSampler.swift; sourceTree = "<group>"; };
 		C977BB3D208C99FD009EACDD /* hat_01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hat_01.wav; sourceTree = "<group>"; };
 		C977BB3E208C99FD009EACDD /* hat_03.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hat_03.wav; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				C903F0C9204C6B5400BD911B /* TBAudioSystem.swift */,
 				C903F0CB204C6B5400BD911B /* TBAudioUnit.swift */,
 				C903F0CC204C6B5400BD911B /* TBModifierGroup.swift */,
+				C95875CB2098E7B400A2C09F /* TBSection.swift */,
 			);
 			path = TBAudioSystem;
 			sourceTree = "<group>";
@@ -560,6 +563,7 @@
 				C977BB03208A9460009EACDD /* TBSampler.swift in Sources */,
 				C903F0D7204C6B5400BD911B /* TBAudioModifier.swift in Sources */,
 				C903F0D3204C6B5400BD911B /* TBDistortionModifier.swift in Sources */,
+				C95875CC2098E7B400A2C09F /* TBSection.swift in Sources */,
 				C9CD251C204FDDC400DA7B6B /* TBIntrument.swift in Sources */,
 				C98512D2202E14EC00D8AE0B /* AppDelegate.swift in Sources */,
 			);

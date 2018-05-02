@@ -13,18 +13,21 @@ import AudioKit
 public class TBSampler : TBInstrument {
     
     private var sampler = AKAppleSampler()
-    var x = AKSamplePlayer()
+    var sample = ""
     
     init() {
         super.init()
         instrumentID = "Sampler"
+        loadSample("kick_01")
     }
     
-    public func loadSample(_ file: URL?) {
-        if(file != nil) {
-            let f : AKAudioFile
-            do { try f = AKAudioFile(forReading: file!)
-                try sampler.loadAudioFile(f)
+    public func loadSample(_ file: String) {
+        sample = file
+        let url = Bundle.main.url(forResource: file, withExtension: "wav") //Convert to url
+        if(url != nil) {
+            let audioFile : AKAudioFile
+            do { try audioFile = AKAudioFile(forReading: url!)
+                try sampler.loadAudioFile(audioFile)
             } catch { TechnoBot.shared.log("File could not be loaded") }
         }
     }
@@ -33,12 +36,15 @@ public class TBSampler : TBInstrument {
         do { try sampler.play()
         } catch { TechnoBot.shared.log("Sampler cannot play.") }
     }
-    
+    /// Not used in sampler
     override public func stop(noteNumber: MIDINoteNumber, channel: MIDIChannel) {
-        //Not required
+        do { try sampler.stop()
+        } catch { TechnoBot.shared.log("Sampler cannot stop.") }
     }
-    
-    override public func getOutput() -> AKNode {
+    override public func getOutput() -> AKNode { return sampler }
+    override public func duplicate() -> TBInstrument {
+        let sampler = TBSampler()
+        sampler.loadSample(sample)
         return sampler
     }
 }

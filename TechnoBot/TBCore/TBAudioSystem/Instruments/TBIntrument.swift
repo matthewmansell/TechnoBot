@@ -9,12 +9,13 @@
 import Foundation
 import AudioKit
 
-/// Wrapper for AKMIDIInstrument
+/// Wrapper for AKMIDIInstrument. Not to be used directly!
 public class TBInstrument: AKMIDIInstrument {
-    var osc = AKOscillator()
-    var instrumentID: String = "Default" //Type identifier
-    //var midiIn: MIDIEndpointRef {get}
-    func getOutput() -> AKNode { return osc }//Output
-    //func start(noteNumber: MIDINoteNumber?, velocity: MIDIVelocity?)
-    //func stop()
+    internal(set) public var instrumentID: String = "Default" //Type identifier
+    public var tag : RecognisedSoundTag? = nil
+    func getOutput() -> AKNode { return AKNode() }//Output
+    func pitchBend(_ time: Double) {}
+    func duplicate() -> TBInstrument {
+        return TBInstrument()
+    }
 }
