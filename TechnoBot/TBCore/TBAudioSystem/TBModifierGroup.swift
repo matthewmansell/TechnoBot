@@ -51,4 +51,7 @@ public class TBModifierGroup {
             else { modifiers[i].setInput(modifiers[i-1].getOutput()) }
         }
     }
+    
+    deinit {
+    }
 }

@@ -60,9 +60,7 @@ public class TechnoBot {
     public func processSection() {
         log("Pushing generated section.")
         _ = audioSystem.getOutput()
-        //vc.setupPlot(AKNode())
         audioSystem.pushSection(newSection) //Push stored changes
-        //vc.setupPlot(audioSystem.getOutput())
         for item in newSection.notes { (log("----"+item)) }
         log("Processing next section...")
         newSection = brain.generateSection() //Generate new changes

@@ -17,7 +17,8 @@ public class TBAudioSystem {
     let RECORD_FILE = "TBRecording"
     
     var unitMixer = AKMixer() //Unit bus
-    var masterMixer = AKMixer()
+    var outputMixer = AKMixer() //Output stream
+    var recordingMixer = AKMixer() //Output to recorder
     var modifiers : TBModifierGroup //Master bus inserts
     var sequencer = TBSequencer() //Main Sequencer
     //var limiter : AKPeakLimiter? //Used as output, level safety is important!
@@ -29,21 +30,13 @@ public class TBAudioSystem {
     /// Initialises the audio system
     public init() {
         modifiers = TBModifierGroup(unitMixer, slots: MOD_SLOTS)
-        AudioKit.output = masterMixer //Reset output
+        AudioKit.output = outputMixer //Reset output
     }
     
-    public func getOutput() -> AKNode { return masterMixer }
+    public func getOutput() -> AKNode { return outputMixer }
     
-    public func play() {
-        //do { try AudioKit.start()
-        //} catch { AKLog("AudioKit did not start!"); TechnoBot.shared.log("Audio system did not start!") }
-        sequencer.play()
-    }
-    public func pause() {
-        //do { try AudioKit.stop()
-        //} catch { AKLog("AudioKit could not stop!"); TechnoBot.shared.log("Audio system could not stop!") }
-        sequencer.pause()
-    }
+    public func play() { sequencer.play() }
+    public func pause() { sequencer.pause() }
     public func isPlaying() -> Bool { return sequencer.isPlaying() }
     
     /// Sets up recorder and starts recording stream to a new file
@@ -65,7 +58,7 @@ public class TBAudioSystem {
         //FileManager.default.createFile(atPath: fileURL!.path, contents: nil, attributes: nil)
         do { let audioFile = try AKAudioFile(forWriting: fileURL!, settings: AKSettings.audioFormat.settings)
             //let m = AKMixer(); m.connect(input: limiter!)
-            try recorder = AKNodeRecorder(node: masterMixer, file: audioFile)
+            try recorder = AKNodeRecorder(node: recordingMixer, file: audioFile)
             try recorder?.record()
             TechnoBot.shared.log("Recording to \"" + fileURL!.absoluteString + "\"") //Notify location
         } catch { TechnoBot.shared.log("Could not start recording.") }
@@ -92,17 +85,20 @@ public class TBAudioSystem {
         let wasPlaying = sequencer.isPlaying()
         sequencer = TBSequencer() //Reset sequencer
         unitMixer = AKMixer() //Reset mixer
+        if(!isRecording()) { recordingMixer = AKMixer() }
         modifiers = TBModifierGroup(unitMixer, slots: MOD_SLOTS)
         generateClick(sequencer)
-        //TechnoBot.shared.log(String(audioUnitCount()))
+        
         for unit in newSection.audioUnits {
             unitMixer.connect(input: unit.getOutput())
             sequencer.connectAudioUnit(unit)
         } //Add all instruments
-        //modifiers.setInput(mixer) //Reset modifier input
+        modifiers.setInput(unitMixer) //Reset modifier input
         //limiter = AKPeakLimiter(modifiers.getOutput()) //Reset limiter
         //masterMixer.disconnectInput(bus: 0)
-        masterMixer.connect(input: modifiers.getOutput())
+        outputMixer.connect(input: modifiers.getOutput())
+        recordingMixer.connect(input: modifiers.getOutput())
+        
         if(wasPlaying) { play() }
         if(!started) {
             do { try AudioKit.start()
@@ -120,6 +116,11 @@ public class TBAudioSystem {
         for i in 0...64 {
             track!.add(noteNumber: 60, velocity: 100, position: AKDuration(beats: Double(i)), duration: AKDuration(beats: 1))
         }
+    }
+    
+    deinit {
+        pause()
+        if(isRecording()) { stopRecording() }
     }
 }
 

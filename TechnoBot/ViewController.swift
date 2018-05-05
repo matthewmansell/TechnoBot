@@ -43,11 +43,12 @@ class ViewController: NSViewController, NSWindowDelegate {
     }
     
     func setupPlot(_ node: AKNode) {
+        plot?.clear()
         plot = AKNodeOutputPlot(node, frame: audioPlot.bounds)
         plot!.plotType = .buffer
         plot!.shouldFill = true
         //plot!.shouldMirror = true
-        plot!.color = NSColor.blue
+        plot!.color = NSColor.gray
         plot!.backgroundColor = NSColor.clear
         plot!.gain = 2
         //plot!.autoresizingMask = NSView.AutoresizingMask.width
@@ -67,6 +68,7 @@ class ViewController: NSViewController, NSWindowDelegate {
     @IBAction func resetSystem(_ sender: NSButton) {
         TechnoBot.shared.reset()
         play.state = NSControl.StateValue(rawValue: 0)
+        record.state = NSControl.StateValue(rawValue: 0)
     }
     
     
