@@ -34,8 +34,8 @@ public class TBSampler : TBInstrument {
         } catch { TechnoBot.shared.log("Sampler cannot play.") }
     }
     public func stop() {
-        do { try sampler.stop()
-        } catch { TechnoBot.shared.log("Sampler cannot stop.") }
+        //do { try sampler.stop()
+        //} catch { TechnoBot.shared.log("Sampler cannot stop.") }
     }
     public func getOutput() -> AKNode { return sampler }
     
