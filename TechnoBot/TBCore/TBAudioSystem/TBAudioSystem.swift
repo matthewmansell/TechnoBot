@@ -18,13 +18,12 @@ public class TBAudioSystem {
     
     var unitMixer = AKMixer() //Unit bus
     var outputMixer = AKMixer() //Output stream
-    var recordingMixer = AKMixer() //Output to recorder
+    var plotMixer = AKMixer() //Output to recorder
     var modifiers : TBModifierGroup //Master bus inserts
     var sequencer = TBSequencer() //Main Sequencer
     //var limiter : AKPeakLimiter? //Used as output, level safety is important!
     var recorder : AKNodeRecorder? = nil
     var recordingSettings: [String : Any] = [:] as [String : Any] //Specify recording settings?
-    var section : TBSection?
     var started = false;
     
     /// Initialises the audio system
@@ -33,7 +32,20 @@ public class TBAudioSystem {
         AudioKit.output = outputMixer //Reset output
     }
     
-    public func getOutput() -> AKNode { return outputMixer }
+    public func reset() {
+        sequencer.pause()
+        do { try AudioKit.stop()
+            started = false;
+        } catch { AKLog("AudioKit did not stop!"); }
+        outputMixer.disconnectInput(bus: 0)
+        unitMixer = AKMixer()
+        modifiers.removeAll()
+        sequencer.sequencer.tracks.removeAll()
+        sequencer.rewind()
+        recorder = nil
+    }
+    
+    public func getOutput() -> AKNode { return plotMixer }
     
     public func play() { sequencer.play() }
     public func pause() { sequencer.pause() }
@@ -57,13 +69,16 @@ public class TBAudioSystem {
         let fileURL = URL(string: directoryPath + "/" + fileName + ".alac")
         //FileManager.default.createFile(atPath: fileURL!.path, contents: nil, attributes: nil)
         do { let audioFile = try AKAudioFile(forWriting: fileURL!, settings: AKSettings.audioFormat.settings)
-            //let m = AKMixer(); m.connect(input: limiter!)
-            try recorder = AKNodeRecorder(node: recordingMixer, file: audioFile)
-            try recorder?.record()
+            try recorder = AKNodeRecorder(node: outputMixer, file: audioFile)
+            try recorder!.record()
             TechnoBot.shared.log("Recording to \"" + fileURL!.absoluteString + "\"") //Notify location
         } catch { TechnoBot.shared.log("Could not start recording.") }
     }
-    public func stopRecording() { recorder?.stop(); recorder = nil; TechnoBot.shared.log("Recording stopped.") }
+    public func stopRecording() {
+        recorder?.stop()
+        recorder = nil
+        TechnoBot.shared.log("Recording stopped.")
+    }
     public func isRecording() -> Bool { if(recorder != nil) { return recorder!.isRecording } else { return false } }
     
     /// Called once per beat, updates timer.
@@ -81,23 +96,24 @@ public class TBAudioSystem {
     
     /// Re-chains audio streams including new content.
     public func pushSection(_ newSection: TBSection) {
-        //section = newSection
         let wasPlaying = sequencer.isPlaying()
+        //do { try AudioKit.stop()
+        //    started = false;
+        //} catch { AKLog("AudioKit did not stop!"); }
         sequencer = TBSequencer() //Reset sequencer
         unitMixer = AKMixer() //Reset mixer
-        if(!isRecording()) { recordingMixer = AKMixer() }
         modifiers = TBModifierGroup(unitMixer, slots: MOD_SLOTS)
         generateClick(sequencer)
+        outputMixer.disconnectInput(bus: 0)
         
         for unit in newSection.audioUnits {
             unitMixer.connect(input: unit.getOutput())
             sequencer.connectAudioUnit(unit)
         } //Add all instruments
         modifiers.setInput(unitMixer) //Reset modifier input
-        //limiter = AKPeakLimiter(modifiers.getOutput()) //Reset limiter
-        //masterMixer.disconnectInput(bus: 0)
-        outputMixer.connect(input: modifiers.getOutput())
-        recordingMixer.connect(input: modifiers.getOutput())
+        //let inputs = [outputMixer.input(0), plotMixer.input(0)]
+        //modifiers.getOutput().outputNode.connect(toInputs: inputs)
+        outputMixer.connect(input: modifiers.getOutput(), bus: 0)
         
         if(wasPlaying) { play() }
         if(!started) {

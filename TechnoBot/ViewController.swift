@@ -44,7 +44,9 @@ class ViewController: NSViewController, NSWindowDelegate {
     
     func setupPlot(_ node: AKNode) {
         plot?.clear()
+        plot = nil
         plot = AKNodeOutputPlot(node, frame: audioPlot.bounds)
+        plot?.node
         plot!.plotType = .buffer
         plot!.shouldFill = true
         //plot!.shouldMirror = true

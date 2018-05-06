@@ -12,9 +12,11 @@ import AudioKit
 public class TBReverbModifier : TBAudioModifier {
     
     private var reverb = AKReverb()
+    private var dryWetMix = 0.1
     
     public func setInput(_ input: AKNode) {
-        reverb = AKReverb(input, dryWetMix: 0.1)
+        var dwm = reverb.dryWetMix
+        reverb = AKReverb(input, dryWetMix: dwm)
         reverb.start()
     }
     
@@ -29,8 +31,8 @@ public class TBReverbModifier : TBAudioModifier {
     public static func factory(_ intensity: ModifierIntensity) -> TBAudioModifier {
         let verb = TBReverbModifier()
         switch intensity {
-        case .low: verb.reverb.dryWetMix = 0.1
-        case .high: verb.reverb.dryWetMix = 0.5
+        case .low: verb.reverb.dryWetMix = Double.random(min: 0.0, max: 0.5)
+        case .high: verb.reverb.dryWetMix = Double.random(min: 0.5, max: 1.0)
         }
         return verb
     }

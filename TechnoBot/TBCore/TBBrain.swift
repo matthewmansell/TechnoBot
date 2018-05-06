@@ -14,9 +14,10 @@ public enum RecognisedSoundTag:String {
     case kick = "kick", clap = "clap", snare = "snare", rim = "rim", hat = "hat", perc = "perc", fm = "fm"
     static func random() -> RecognisedSoundTag {
         let list = [self.kick, self.clap, self.snare, self.rim, self.hat, self.perc, self.fm]
-        return list[TechnoBot.randomInt(list.count)]
+        return list[Int.random(list.count)]
     }
 }
+public enum Modifiers {}
 
 
 /// Responsible for generating and modifying content. Processing handled by utility functions.
@@ -28,6 +29,7 @@ public class TBBrain {
     let ADDITION_CHANCE = [75, 50, 0] //Chance of generating/adding a new sound
     let REMOVAL_CHANCE = [0, 50, 75] //Chance of removing a sound
     let MUTATION_CHANCE = [25, 25, 25] //Chance of mutating a sound
+    let MAX_UNITS = 6
     //Samples
     let kickSamples = ["kick_01", "kick_02", "kick_03", "kick_05", "kick_05", "kick_06", "kick_07", "kick_08"]
     let hatSamples = ["hat_01", "hat_02", "hat_03", "hat_04", "hat_05", "hat_06", "hat_07", "hat_08"]
@@ -41,27 +43,42 @@ public class TBBrain {
     
     var audioUnits = [TBAudioUnit]() //Units to be added to system
     var modifiers = [TBAudioModifier]() //Modifiers to be added to system (main bus)
-    
+    var lastAdded = 0, lastRemoved = 0, lastMutated = 0
     
     var newSection = TBSection()
     
-    init() {
-        //var au = TBAudioUnit(genInstrument(RecognisedSoundTag.perc))
-        //genScore(au, notePattern: [[1,1],[1,1],[1,1],[1,1]], beatCoverage: 2) //Kick pattern
-        //audioUnits.append(au)
+    public func reset() {
+        section = Section.buildup
+        adaptionRate = 1
+        audioUnits.removeAll()
+        modifiers.removeAll()
+        lastAdded = 0; lastRemoved = 0; lastMutated = 0
     }
     
     public func generateSection() -> TBSection {
         let newSection = TBSection() //Reset
         
         if(audioUnits.count == 0) { audioUnits.append(genAudioUnit()) } //At least 1 sound
-        var rounds = reducingChance(50)
-        for i in 0..<rounds {
-            if(shouldAdapt(ADDITION_CHANCE)) { audioUnits.append(genAudioUnit()) }
-            if(shouldAdapt(REMOVAL_CHANCE)) { }
-            //if(shouldAdapt(MUTATION_CHANCE)) { print("adding") }
-            //print("result = "+String(reducingChance(90.0, chanceReduction: 0.9)))
+        let rounds = reducingChance(50)
+        var added = false, removed = false, mutated = false
+        for _ in 0..<rounds {
+            if((shouldAdapt(REMOVAL_CHANCE) && audioUnits.count>1) || lastRemoved >= 3 || audioUnits.count >= MAX_UNITS) {
+                removed = true
+                var lifetimes = [Int]()
+                for unit in audioUnits { lifetimes.append(unit.lifetime) }
+                audioUnits.remove(at: rouletteSelect(lifetimes))
+            }
+            if(shouldAdapt(ADDITION_CHANCE) || lastAdded >= 3) {
+                added = true
+                audioUnits.append(genAudioUnit())
+            }
+            if(shouldAdapt(MUTATION_CHANCE) || lastMutated == 2) {
+                mutated = true
+            }
         }
+        if(added == true) { lastAdded = 0 } else { lastAdded+=1 }
+        if(removed == true) { lastRemoved = 0 } else { lastRemoved+=1 }
+        if(mutated == true) { lastMutated = 0 } else { lastMutated+=1 }
         
         //Prepare for next section
         if(shouldAdapt(PROGRESSION_CHANCE)) { //Move section?
@@ -74,8 +91,8 @@ public class TBBrain {
         for unit in audioUnits {
             unit.instrument.start(noteNumber: 10, velocity: 100); unit.instrument.stop() //Removes glitch
             newSection.audioUnits.append(unit.duplicate())
-            unit.lifetime += 1
-        } //Write section
+            unit.lifetime += 1 //Increment life
+        }
         
         return newSection
     }
@@ -84,34 +101,63 @@ public class TBBrain {
     
     /// Utility, question to adapt
     private func shouldAdapt(_ chanceArray: [Int]) -> Bool {
-        if(TechnoBot.randomInt(100) < (chanceArray[section.rawValue] * adaptionRate)) { return true }
+        if(Int.random(100) < (chanceArray[section.rawValue] * adaptionRate)) { return true }
         else { return false }
     }
     
     /// Utility to calculate number of iterations for a cycle to occur, when chance reduces by an ammount each time
     private func reducingChance(_ initialChance: Double, chanceReduction: Double = 0.75) -> Int {
         var count = 0, chance = initialChance
-        while(TechnoBot.randomInt(100) < Int(chance)) { count += 1; chance *= chanceReduction }
+        while(Int.random(100) < Int(chance)) { count += 1; chance *= chanceReduction }
         return count
+    }
+    
+    /// Utility to select an individual form an array based on its value.
+    private func rouletteSelect(_ individuals: [Int]) -> Int {
+        var total = 0, cumulative = 0.0
+        var roulette = Array(repeating: 0.0, count: individuals.count)
+        for i in 0..<individuals.count { total += individuals[i] } //Total lifetime
+        for i in 0..<individuals.count {
+            if(individuals[i] != 0) {
+                roulette[i] = cumulative + (individuals[i]/total)
+                cumulative = roulette[i]
+            }
+        }
+        roulette[roulette.count-1] = 1
+        let probability = Double.random()
+        var selected = 0
+        for i in 0..<individuals.count {
+            if(probability>=roulette[i]) {
+                selected = i
+                break
+            }
+        }
+        return selected
     }
     
     private func genAudioUnit() -> TBAudioUnit {
         //Decide unit type, search current unit tags
         var tags = [RecognisedSoundTag]()
         for unit in audioUnits { if(unit.getTag() != nil) {tags.append(unit.getTag()!)} }
-        print(tags)
-        //Overwrite specials
+        
+        var newUnit: TBAudioUnit? = nil
+        //Kick is special
         if(!tags.contains(RecognisedSoundTag.kick) && section == Section.dance) { //Must have kick in a dance section
-            let kick = TBAudioUnit(genInstrument(RecognisedSoundTag.kick))
-            genScore(kick, notePattern: [[1,1],[1,1],[1,1],[1,1]], beatCoverage: 4) //Kick pattern
-            newSection.notes.append("Added kick")
-            return kick
+            newUnit = TBAudioUnit(genInstrument(RecognisedSoundTag.kick))
+            genScore(newUnit!, notePattern: [[1,1],[1,1],[1,1],[1,1]], beatCoverage: 4) //Kick pattern
+        } else {
+            newUnit = TBAudioUnit(genInstrument())
+            genScore(newUnit!)
         }
         
-        //Else random
-        let newUnit = TBAudioUnit(genInstrument())
-        genScore(newUnit)
-        return newUnit
+        var modifiersToAdd = reducingChance(25)
+        if(modifiersToAdd>5) { modifiersToAdd = 5 } //Cap
+        for _ in 0..<modifiersToAdd {
+            print("adding a modifier")
+            newUnit!.addModifier(genModifier())
+        }
+        
+        return newUnit!
     }
     /**
      Generates an insturment
@@ -123,32 +169,32 @@ public class TBBrain {
         switch tag {
         case .kick:
             let sampler = TBSampler()
-            sampler.loadSample(kickSamples[TechnoBot.randomInt(kickSamples.count-1)])
+            sampler.loadSample(kickSamples[Int.random(kickSamples.count-1)])
             sampler.tag = RecognisedSoundTag.kick
             return sampler
         case .clap:
             let sampler = TBSampler()
-            sampler.loadSample(clapSamples[TechnoBot.randomInt(clapSamples.count-1)])
+            sampler.loadSample(clapSamples[Int.random(clapSamples.count-1)])
             sampler.tag = RecognisedSoundTag.clap
             return sampler
         case .snare:
             let sampler = TBSampler()
-            sampler.loadSample(snareSamples[TechnoBot.randomInt(snareSamples.count-1)])
+            sampler.loadSample(snareSamples[Int.random(snareSamples.count-1)])
             sampler.tag = RecognisedSoundTag.snare
             return sampler
         case .rim:
             let sampler = TBSampler()
-            sampler.loadSample(rimSamples[TechnoBot.randomInt(rimSamples.count-1)])
+            sampler.loadSample(rimSamples[Int.random(rimSamples.count-1)])
             sampler.tag = RecognisedSoundTag.rim
             return sampler
         case .hat:
             let sampler = TBSampler()
-            sampler.loadSample(hatSamples[TechnoBot.randomInt(hatSamples.count-1)])
+            sampler.loadSample(hatSamples[Int.random(hatSamples.count-1)])
             sampler.tag = RecognisedSoundTag.hat
             return sampler
         case .perc:
             let sampler = TBSampler()
-            sampler.loadSample(percSamples[TechnoBot.randomInt(percSamples.count-1)])
+            sampler.loadSample(percSamples[Int.random(percSamples.count-1)])
             sampler.tag = RecognisedSoundTag.perc
             return sampler
         case .fm:
@@ -158,9 +204,16 @@ public class TBBrain {
         }
     }
     
+    /// Generates a random audio modifier
     private func genModifier() -> TBAudioModifier {
-        let newModifier = TBBlankModifier()
-        return newModifier
+        let selection = Int.random(2), intensity = ModifierIntensity.random()
+        let newModifier : TBAudioModifier?
+        switch selection {
+        case 0: newModifier = TBReverbModifier.factory(intensity)
+        case 1: newModifier = TBDistortionModifier.factory(intensity)
+        default: newModifier = TBBlankModifier()
+        }
+        return newModifier!
     }
     
     /**
@@ -176,10 +229,10 @@ public class TBBrain {
             var iterations = reducingChance(95.0, chanceReduction: 0.8), length = 2
             while(length < 32 && iterations > 0) { length *= 2; iterations -= 1 } //Doubling length gives 1,2,4,8 etc..
             pattern = Array(repeating: Array(repeating: 0, count: 2), count: length) //Empty pattern of length n
-            let noteChance = TechnoBot.randomInt(100) //Chance of note addition
+            let noteChance = Int.random(100) //Chance of note addition
             for i in 0..<pattern!.count {
-                if(noteChance < TechnoBot.randomInt(100)) {
-                    pattern![i][0] = Double(TechnoBot.randomInt(80)) //MIDI number
+                if(noteChance < Int.random(100)) {
+                    pattern![i][0] = Double(Int.random(80)) //MIDI number
                     pattern![i][1] = 0.5
                 }
             }

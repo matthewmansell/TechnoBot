@@ -22,7 +22,7 @@ public class TechnoBot {
     var newSection = TBSection()
     
     init() {
-        vc.setupPlot(audioSystem.getOutput())
+        //vc.setupPlot(audioSystem.getOutput())
         newSection = brain.generateSection()
         processSection()
         
@@ -48,21 +48,20 @@ public class TechnoBot {
     
     public func reset() {
         audioSystem.pause() //Pause for safety
-        brain = TBBrain() //Re-initialise brain
-        audioSystem = TBAudioSystem() //Re-initialise audio system
-        vc.setupPlot(audioSystem.getOutput())
+        brain.reset() //Re-initialise brain
+        audioSystem.reset() //Re-initialise audio system
         newSection = brain.generateSection()
         processSection()
+        //vc.setupPlot(audioSystem.getOutput())
         log("System reset.")
     }
     
     /// Pushes stored changes and then generates ones for next sectionaz.
     public func processSection() {
-        log("Pushing generated section.")
+        log("New Section")
         _ = audioSystem.getOutput()
         audioSystem.pushSection(newSection) //Push stored changes
-        for item in newSection.notes { (log("----"+item)) }
-        log("Processing next section...")
+        for item in newSection.notes { (log("TB: "+item)) }
         newSection = brain.generateSection() //Generate new changes
     }
     
@@ -71,15 +70,25 @@ public class TechnoBot {
     /// Update sequence timer
     public func updateTimer(_ beat: Int) { vc.setBeat(beat+1) }
     
-    /// Random number utility
-    static func randomInt(_ n: Int) -> Int { return Int(arc4random_uniform(UInt32(n))) }
-    static func randomBetween(_ lower: Double, _ higher: Double) -> Double {
-        return 0.5
+}
+
+/// Int with random funciton extensions
+public extension Int {
+    public static func random(_ n: Int) -> Int {
+        return Int(arc4random_uniform(UInt32(n)))
+    }
+    public static func random(min: Int, max: Int) -> Int {
+        return Int.random(max-min+1)+min
+    }
+}
+/// Double with random function extensions
+public extension Double {
+    public static func random() -> Double {
+        return Double(arc4random()) / 0xFFFFFFFF
+    }
+    public static func random(min: Double, max: Double) -> Double {
+        return Double.random()*(max-min)+min
     }
 }
 
-//Just some utility extensions
 
-public extension Int {
-    
-}

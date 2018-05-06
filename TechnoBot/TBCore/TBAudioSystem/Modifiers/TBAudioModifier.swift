@@ -10,7 +10,12 @@ import Foundation
 import AudioKit
 
 /// Used for controlling modifier factory generation
-public enum ModifierIntensity { case low, high  }
+public enum ModifierIntensity { case low, high
+    static func random() -> ModifierIntensity {
+        let list = [self.low, self.high]
+        return list[Int.random(list.count)]
+    }
+}
 
 /// Protocol for which instruments to adhere
 public protocol TBAudioModifier {
@@ -27,10 +32,10 @@ public protocol TBAudioModifier {
 /// A blank 'passthrough' modifier. Used for empty chain links.
 public class TBBlankModifier : TBAudioModifier {
     
-    public var input = AKNode()
+    public weak var input = AKNode()
     
     public func setInput(_ input: AKNode) { self.input = input }
-    public func getOutput() -> AKNode { return input }
+    public func getOutput() -> AKNode { return input! }
     public func duplicate() -> TBAudioModifier { return TBBlankModifier() }
     public static func factory(_ intensity: ModifierIntensity) -> TBAudioModifier {
         return TBBlankModifier()

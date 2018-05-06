@@ -12,7 +12,7 @@ import AudioKit
 /// Links a number of modifiers into a chain.
 public class TBModifierGroup {
     
-    private var input : AKNode //Source node
+    private weak var input : AKNode? //Source node
     private var modifiers = [TBAudioModifier]()
     
     public init(_ input: AKNode, slots: Int = 5) {
@@ -27,6 +27,7 @@ public class TBModifierGroup {
     }
     
     public func setModifier(modifier: TBAudioModifier, slot: Int) {
+        print("setting modifier")
         modifiers[slot] = modifier
         chainModifiers()
     }
@@ -36,8 +37,24 @@ public class TBModifierGroup {
         chainModifiers()
     }
     
+    public func removeAll() {
+        let count = modifiers.count
+        modifiers.removeAll()
+        for _ in 0...count-1 { modifiers.append(TBBlankModifier()) }
+        chainModifiers()
+    }
+    
     public func getModifier(slot: Int) -> TBAudioModifier {
         return modifiers[slot]
+    }
+    
+    /// - Returns: Array of idexes of any free slots
+    public func getFreeSlots() -> [Int] {
+        var free = [Int]()
+        for i in 0..<modifiers.count {
+            if(modifiers[i] is TBBlankModifier) { free.append(i) }
+        }
+        return free
     }
     
     public func getOutput() -> AKNode {
@@ -47,11 +64,17 @@ public class TBModifierGroup {
     /// Rechains modifier IO
     private func chainModifiers() {
         for i in 0...modifiers.count-1 {
-            if(i == 0) { modifiers[0].setInput(input) } //First gets source input
+            if(i == 0) { modifiers[0].setInput(input!) } //First gets source input
             else { modifiers[i].setInput(modifiers[i-1].getOutput()) }
         }
     }
     
-    deinit {
+    /// Copies this objects setup into another.
+    public func copyTo(_ modifierGroup: TBModifierGroup) {
+        for i in 0..<modifiers.count {
+            if(!(modifiers[i] is TBBlankModifier)) {
+                modifierGroup.setModifier(modifier: modifiers[i].duplicate(), slot: i)
+            }
+        }
     }
 }
