@@ -836,6 +836,9 @@
                                             <rect key="frame" x="-2" y="40" width="122" height="24"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                             <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="5" allowsTickMarkValuesOnly="YES" sliderType="linear" id="Rn9-9u-klS"/>
+                                            <connections>
+                                                <action selector="setAddaption:" target="XfG-lQ-9wD" id="IAX-KV-vnO"/>
+                                            </connections>
                                         </slider>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUy-j3-vjs">
                                             <rect key="frame" x="90" y="16" width="30" height="17"/>

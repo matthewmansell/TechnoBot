@@ -31,7 +31,7 @@ public class TBReverbModifier : TBAudioModifier {
     public static func factory(_ intensity: ModifierIntensity) -> TBAudioModifier {
         let verb = TBReverbModifier()
         switch intensity {
-        case .low: verb.reverb.dryWetMix = Double.random(min: 0.0, max: 0.5)
+        case .low: verb.reverb.dryWetMix = Double.random(min: 0.1, max: 0.5)
         case .high: verb.reverb.dryWetMix = Double.random(min: 0.5, max: 1.0)
         }
         return verb

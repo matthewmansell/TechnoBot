@@ -27,7 +27,6 @@ public class TBModifierGroup {
     }
     
     public func setModifier(modifier: TBAudioModifier, slot: Int) {
-        print("setting modifier")
         modifiers[slot] = modifier
         chainModifiers()
     }
@@ -63,9 +62,11 @@ public class TBModifierGroup {
     
     /// Rechains modifier IO
     private func chainModifiers() {
-        for i in 0...modifiers.count-1 {
-            if(i == 0) { modifiers[0].setInput(input!) } //First gets source input
-            else { modifiers[i].setInput(modifiers[i-1].getOutput()) }
+        if(input != nil) {
+            for i in 0...modifiers.count-1 {
+                if(i == 0) { modifiers[0].setInput(input!) } //First gets source input
+                else { modifiers[i].setInput(modifiers[i-1].getOutput()) }
+            }
         }
     }
     

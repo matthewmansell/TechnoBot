@@ -72,6 +72,9 @@ class ViewController: NSViewController, NSWindowDelegate {
         record.state = NSControl.StateValue(rawValue: 0)
     }
     
+    @IBAction func setAddaption(_ sender: NSSlider) {
+        TechnoBot.shared.setAdaption(sender.doubleValue)
+    }
     
     
     func writeLog(_ s: String) {

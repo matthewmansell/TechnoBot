@@ -39,7 +39,7 @@ public class TBBrain {
     let percSamples = ["perc_01", "perc_02", "perc_03", "perc_04", "perc_05", "perc_06", "perc_07", "perc_08"]
     
     var section = Section.buildup //Current section
-    var adaptionRate = 1
+    var adaptionRate = 1.0
     
     var audioUnits = [TBAudioUnit]() //Units to be added to system
     var modifiers = [TBAudioModifier]() //Modifiers to be added to system (main bus)
@@ -97,11 +97,11 @@ public class TBBrain {
         return newSection
     }
     
-    public func setAdaptionRate(_ rate: Int) { adaptionRate = rate }
+    public func setAdaptionRate(_ rate: Double) { adaptionRate = rate }
     
     /// Utility, question to adapt
     private func shouldAdapt(_ chanceArray: [Int]) -> Bool {
-        if(Int.random(100) < (chanceArray[section.rawValue] * adaptionRate)) { return true }
+        if(Double(Int.random(100)) < (chanceArray[section.rawValue] * adaptionRate)) { return true }
         else { return false }
     }
     
@@ -120,8 +120,8 @@ public class TBBrain {
         for i in 0..<individuals.count {
             if(individuals[i] != 0) {
                 roulette[i] = cumulative + (individuals[i]/total)
+            } else { roulette[i] = cumulative }
                 cumulative = roulette[i]
-            }
         }
         roulette[roulette.count-1] = 1
         let probability = Double.random()
@@ -150,10 +150,9 @@ public class TBBrain {
             genScore(newUnit!)
         }
         
-        var modifiersToAdd = reducingChance(25)
+        var modifiersToAdd = reducingChance(50)
         if(modifiersToAdd>5) { modifiersToAdd = 5 } //Cap
         for _ in 0..<modifiersToAdd {
-            print("adding a modifier")
             newUnit!.addModifier(genModifier())
         }
         
@@ -206,11 +205,13 @@ public class TBBrain {
     
     /// Generates a random audio modifier
     private func genModifier() -> TBAudioModifier {
-        let selection = Int.random(2), intensity = ModifierIntensity.random()
+        let selection = Int.random(4), intensity = ModifierIntensity.random()
         let newModifier : TBAudioModifier?
         switch selection {
         case 0: newModifier = TBReverbModifier.factory(intensity)
         case 1: newModifier = TBDistortionModifier.factory(intensity)
+        case 2: newModifier = TBPhaserModifier.factory(intensity)
+        case 3: newModifier = TBDelayModifier.factory(intensity)
         default: newModifier = TBBlankModifier()
         }
         return newModifier!

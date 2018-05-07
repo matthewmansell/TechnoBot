@@ -17,7 +17,7 @@ public enum ModifierIntensity { case low, high
     }
 }
 
-/// Protocol for which instruments to adhere
+/// Protocol (interface) for which instruments to adhere
 public protocol TBAudioModifier {
     /// Must be able to set the input
     func setInput(_ input: AKNode)

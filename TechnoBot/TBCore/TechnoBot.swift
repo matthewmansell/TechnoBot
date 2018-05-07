@@ -47,6 +47,7 @@ public class TechnoBot {
     }
     
     public func reset() {
+        
         audioSystem.pause() //Pause for safety
         brain.reset() //Re-initialise brain
         audioSystem.reset() //Re-initialise audio system
@@ -55,6 +56,8 @@ public class TechnoBot {
         //vc.setupPlot(audioSystem.getOutput())
         log("System reset.")
     }
+    
+    public func setAdaption(_ value: Double) { brain.setAdaptionRate(value) }
     
     /// Pushes stored changes and then generates ones for next sectionaz.
     public func processSection() {

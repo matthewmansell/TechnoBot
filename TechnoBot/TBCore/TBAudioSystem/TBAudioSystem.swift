@@ -18,13 +18,12 @@ public class TBAudioSystem {
     
     var unitMixer = AKMixer() //Unit bus
     var outputMixer = AKMixer() //Output stream
-    var plotMixer = AKMixer() //Output to recorder
     var modifiers : TBModifierGroup //Master bus inserts
     var sequencer = TBSequencer() //Main Sequencer
-    //var limiter : AKPeakLimiter? //Used as output, level safety is important!
     var recorder : AKNodeRecorder? = nil
     var recordingSettings: [String : Any] = [:] as [String : Any] //Specify recording settings?
     var started = false;
+    var freeBus = 0 //Keep note of bus to use, last used not removed to allow for reverb/delay to playout
     
     /// Initialises the audio system
     public init() {
@@ -33,11 +32,13 @@ public class TBAudioSystem {
     }
     
     public func reset() {
+        if(isRecording()) { stopRecording() }
         sequencer.pause()
         do { try AudioKit.stop()
             started = false;
         } catch { AKLog("AudioKit did not stop!"); }
         outputMixer.disconnectInput(bus: 0)
+        outputMixer.disconnectInput(bus: 1)
         unitMixer = AKMixer()
         modifiers.removeAll()
         sequencer.sequencer.tracks.removeAll()
@@ -45,7 +46,7 @@ public class TBAudioSystem {
         recorder = nil
     }
     
-    public func getOutput() -> AKNode { return plotMixer }
+    public func getOutput() -> AKNode { return outputMixer }
     
     public func play() { sequencer.play() }
     public func pause() { sequencer.pause() }
@@ -97,26 +98,22 @@ public class TBAudioSystem {
     /// Re-chains audio streams including new content.
     public func pushSection(_ newSection: TBSection) {
         let wasPlaying = sequencer.isPlaying()
-        //do { try AudioKit.stop()
-        //    started = false;
-        //} catch { AKLog("AudioKit did not stop!"); }
         sequencer = TBSequencer() //Reset sequencer
         unitMixer = AKMixer() //Reset mixer
         modifiers = TBModifierGroup(unitMixer, slots: MOD_SLOTS)
         generateClick(sequencer)
-        outputMixer.disconnectInput(bus: 0)
+        outputMixer.disconnectInput(bus: freeBus)
         
         for unit in newSection.audioUnits {
             unitMixer.connect(input: unit.getOutput())
             sequencer.connectAudioUnit(unit)
         } //Add all instruments
         modifiers.setInput(unitMixer) //Reset modifier input
-        //let inputs = [outputMixer.input(0), plotMixer.input(0)]
-        //modifiers.getOutput().outputNode.connect(toInputs: inputs)
-        outputMixer.connect(input: modifiers.getOutput(), bus: 0)
+        outputMixer.connect(input: modifiers.getOutput(), bus: freeBus)
+        if(freeBus==1) { freeBus = 0 } else { freeBus = 1 } //Free bus switches between 0 & 1
         
         if(wasPlaying) { play() }
-        if(!started) {
+        if(!started) { //Start on first time
             do { try AudioKit.start()
             } catch { AKLog("AudioKit did not start!"); }
             started = true

@@ -18,13 +18,11 @@ public class TBAudioUnit {
     var instrument: TBInstrument //Instrument
     var modifierGroup : TBModifierGroup //Modifiers
     var musicTrack = AKMusicTrack() //Midi
-    var limiter : AKPeakLimiter //For safety reasons
     
     public init(_ instrument: TBInstrument, modifierSlots: Int = 5) {
         self.instrument = instrument
         modifierGroup = TBModifierGroup(instrument.getOutput(), slots: modifierSlots)
         musicTrack.setMIDIOutput(instrument.midiIn())
-        limiter = AKPeakLimiter()
     }
     
     deinit { print("Deinit"+instrument.instrumentID) }
@@ -41,13 +39,15 @@ public class TBAudioUnit {
         }
     }
     
-    public func removeModifier(_ slot: Int) { modifierGroup.removeModifier(slot: slot) }
+    public func removeModifier(_ slot: Int) {
+        modifierGroup.removeModifier(slot: slot)
+    }
     
     public func getFreeModifierSlots() -> [Int] { return modifierGroup.getFreeSlots() }
     
     public func getOutput() -> AKNode {
-        //limiter
-        return modifierGroup.getOutput() //Last modifier is output
+        return AKPeakLimiter(modifierGroup.getOutput()) //Run through limiter
+        //return modifierGroup.getOutput() //Last modifier is output
     }
     
     public func getTag() -> RecognisedSoundTag? { return instrument.tag }

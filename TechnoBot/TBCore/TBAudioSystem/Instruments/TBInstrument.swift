@@ -9,7 +9,7 @@
 import Foundation
 import AudioKit
 
-/// Protocol for which instruments to adhere
+/// Protocol (interface) for which instruments to adhere
 public protocol TBInstrument {
     /// An instrument should have a type identifier.
     var instrumentID : String {get set}

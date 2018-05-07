@@ -66,6 +66,8 @@
 		C98512D4202E14EC00D8AE0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98512D3202E14EC00D8AE0B /* ViewController.swift */; };
 		C98512D6202E14EC00D8AE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C98512D5202E14EC00D8AE0B /* Assets.xcassets */; };
 		C98512D9202E14EC00D8AE0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C98512D7202E14EC00D8AE0B /* Main.storyboard */; };
+		C99A531620A06B2500A1B638 /* TBPhaserModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99A531520A06B2500A1B638 /* TBPhaserModifier.swift */; };
+		C99A531820A06D4700A1B638 /* TBDelayModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99A531720A06D4700A1B638 /* TBDelayModifier.swift */; };
 		C9CD2517204FDD3A00DA7B6B /* TBFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD2516204FDD3A00DA7B6B /* TBFactory.swift */; };
 		C9CD251A204FDDB700DA7B6B /* TBFMSynthesiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD2519204FDDB700DA7B6B /* TBFMSynthesiser.swift */; };
 		C9CD251C204FDDC400DA7B6B /* TBInstrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CD251B204FDDC400DA7B6B /* TBInstrument.swift */; };
@@ -163,6 +165,8 @@
 		C98512D8202E14EC00D8AE0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C98512DA202E14EC00D8AE0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C98512DB202E14EC00D8AE0B /* TechnoBot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TechnoBot.entitlements; sourceTree = "<group>"; };
+		C99A531520A06B2500A1B638 /* TBPhaserModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBPhaserModifier.swift; sourceTree = "<group>"; };
+		C99A531720A06D4700A1B638 /* TBDelayModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBDelayModifier.swift; sourceTree = "<group>"; };
 		C9CD2516204FDD3A00DA7B6B /* TBFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBFactory.swift; sourceTree = "<group>"; };
 		C9CD2519204FDDB700DA7B6B /* TBFMSynthesiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBFMSynthesiser.swift; sourceTree = "<group>"; };
 		C9CD251B204FDDC400DA7B6B /* TBInstrument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBInstrument.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 				C903F0CA204C6B5400BD911B /* TBAudioModifier.swift */,
 				C903F0C5204C6B5400BD911B /* TBReverbModifier.swift */,
 				C903F0C6204C6B5400BD911B /* TBDistortionModifier.swift */,
+				C99A531520A06B2500A1B638 /* TBPhaserModifier.swift */,
+				C99A531720A06D4700A1B638 /* TBDelayModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -542,11 +548,13 @@
 				C98512D4202E14EC00D8AE0B /* ViewController.swift in Sources */,
 				C903F0D4204C6B5400BD911B /* TBAutomator.swift in Sources */,
 				C903F0D9204C6B5400BD911B /* TBModifierGroup.swift in Sources */,
+				C99A531620A06B2500A1B638 /* TBPhaserModifier.swift in Sources */,
 				C9CD2517204FDD3A00DA7B6B /* TBFactory.swift in Sources */,
 				C903F0D6204C6B5400BD911B /* TBAudioSystem.swift in Sources */,
 				C903F0D1204C6B5400BD911B /* TechnoBot.swift in Sources */,
 				C903F0D5204C6B5400BD911B /* TBSequencer.swift in Sources */,
 				C9CD251A204FDDB700DA7B6B /* TBFMSynthesiser.swift in Sources */,
+				C99A531820A06D4700A1B638 /* TBDelayModifier.swift in Sources */,
 				C903F0D8204C6B5400BD911B /* TBAudioUnit.swift in Sources */,
 				C977BB03208A9460009EACDD /* TBSampler.swift in Sources */,
 				C903F0D7204C6B5400BD911B /* TBAudioModifier.swift in Sources */,

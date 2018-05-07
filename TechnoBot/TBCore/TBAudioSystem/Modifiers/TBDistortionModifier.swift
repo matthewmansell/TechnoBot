@@ -26,7 +26,6 @@ public class TBDistortionModifier : TBAudioModifier {
     }
     
     public static func factory(_ intensity: ModifierIntensity) -> TBAudioModifier {
-        print("DISTORTION!!!!!")
         let distortion = TBDistortionModifier()
         ///switch intensity {
         ///case .low: distortion.distortion.
