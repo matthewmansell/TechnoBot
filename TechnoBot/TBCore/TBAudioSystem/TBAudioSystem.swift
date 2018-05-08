@@ -41,9 +41,7 @@ public class TBAudioSystem {
         outputMixer.disconnectInput(bus: 1)
         unitMixer = AKMixer()
         modifiers.removeAll()
-        sequencer.sequencer.tracks.removeAll()
-        sequencer.rewind()
-        recorder = nil
+        sequencer = TBSequencer()
     }
     
     public func getOutput() -> AKNode { return outputMixer }
@@ -90,7 +88,6 @@ public class TBAudioSystem {
         if(sequencer.getBeat() >= 32) {
             sequencer.pause()
             TechnoBot.shared.processSection()
-            sequencer.rewind()
             sequencer.play()
         }
     }
